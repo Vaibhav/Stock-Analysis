@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import json
 import datetime
 
@@ -7,14 +7,14 @@ import datetime
 # write to JSON file and properly formats the file
 def write_to_file(nameOfFile, data):
     with open(nameOfFile, 'w+') as f:
-        print "Dumping JSON to", nameOfFile
+        print("Dumping JSON to", nameOfFile)
         json.dump(data, f, sort_keys=True, indent=4, separators=(',', ':'))
 
 
 # get the data using StockTwits API
 def get_twits(ticker):
     url = "https://api.stocktwits.com/api/2/streams/symbol/{0}.json".format(ticker)
-    connection = urllib2.urlopen(url)
+    connection = urllib.request.urlopen(url)
     data = connection.read()
     connection.close()
     return json.loads(data)
@@ -24,7 +24,7 @@ def get_twits(ticker):
 def get_twits_list(tickers):
     ret = {}
     for ticker in tickers:
-        print "Getting data for", ticker
+        print("Getting data for", ticker)
         # error handling
         try:
             data = get_twits(ticker)
@@ -32,30 +32,31 @@ def get_twits_list(tickers):
             msgs = data['messages']
             ret.update({symbol: msgs})
         except Exception as e:
-            print e
-            print "Error getting", ticker
+            print(e)
+            print("Error getting", ticker)
     return ret
 
 
 def read_tickers():
-    print "Reading tickers from \"tickers.txt\":"
+    print("Reading tickers from \"tickers.txt\":")
     f = open("tickers.txt", 'r')
     names = []
     # read tickers from tickers.txt
     for line in f:
-        line = line.strip('\n')
-        line = line.strip('\t')
-        names.append(line);
-    print names
+    	line = line.strip('\n')
+    	line = line.upper()
+    	line = line.strip('\t')
+    	names.append(line)
+    print(names)
     return names
 
 
 def remove_old(original, age_limit=30):
-    print "Removing tweets that are more than", age_limit, "days old"
+    print("Removing tweets that are more than", age_limit, "days old")
     threshold = datetime.datetime.now() - datetime.timedelta(age_limit)
     result = {}
     # checks if data is more than age_limit and removes if so
-    for ticker in original.keys():
+    for ticker in list(original.keys()):
         result[ticker] = []
         for msg in original[ticker]:
             dt = datetime.datetime.strptime(msg["created_at"], "%Y-%m-%dT%H:%M:%SZ")
@@ -69,13 +70,13 @@ FILENAME = "stocktwits.json"
 if __name__ == "__main__":
 
     # Optional file output
-    print "Do you want to specify name of file?"
-    x = raw_input()
+    print("Do you want to specify name of file?")
+    x = input()
 
     # Execute this code if option is taken
     if x.startswith("y") or x.startswith("Y"):
-        print "What is file name?"
-        filename = raw_input()
+        print("What is file name?")
+        filename = input()
         if not (filename.endswith(".json")):
             filename = filename + ".json"
         FILENAME = filename
