@@ -20,6 +20,8 @@ the_stock = raw_input('Enter Stock Ticker Code: \n')
 the_stock = the_stock.upper().strip()
 symbols_list = [the_stock]
 year = raw_input('Enter starting year: \n')
+the_year = year.strip()
+year = year.strip()
 #Ex: 'YHOO','MSFT','ALTR','WDC','KLAC', 'BAC', 'KMI' ,'SUNE', 'HPQ', 'FCX', 'GE', 'PBR', 'BABA', 'ITUB', 'XOM', 'C', 'EMC', 'MPLX', 'CNX' ,'NRG', 'S', 'EPD', 'WMT', 'ORCL'
  
 if os.path.isfile(symbols_list[0]+'.csv') == False:
@@ -28,26 +30,19 @@ if os.path.isfile(symbols_list[0]+'.csv') == False:
     now = datetime.datetime.now()
     is_today = 0;
     year = int(year)
+
+    if(year == now.year):
+        year = year - 1
+        is_today = 1;
     
     for ticker in symbols_list:
         print ticker
         i,j = 0,0
-
-        if(year == now.year and is_today == 1):
-                break;
         
         for i in range (0,month):
             print months[i]
-                
-            if(year == now.year and i+1 == now.month and is_today == 1):
-                break;
-			
-			
+				
             for j in range(0,business_days):
-
-                if(year == now.year and i+1 == now.month and j+1 == now.day):
-                    is_today = 1;
-                    break;
 				
                 print j+1
                 
@@ -70,10 +65,12 @@ if os.path.isfile(symbols_list[0]+'.csv') == False:
     outFile =  open(symbols_list[0]+'Scraped'+'.csv', 'w')
     
     listLine = []
-	
+    the_year = '/' + the_year
     for line in inFile:
 
         if line in listLine:
+            continue
+        if is_today == 1 and the_year not in line:
             continue
         else:
             outFile.write(line)
