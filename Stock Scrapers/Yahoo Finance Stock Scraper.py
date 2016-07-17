@@ -1,4 +1,13 @@
-#Scrapes stock data from Yahoo Finance
+##############
+'''
+   Author: Vaibhav Khaitan
+   Date: July 2016
+   Scrape Stock data using Yahoo Finance API
+   Script asks user for Stock symbol and starting year
+   Script outputs a CSV file with open/high/low/close/volume for given stock
+'''
+##############
+
 import datetime
 import pandas as pd
 import csv
@@ -14,8 +23,7 @@ from pyalgotrade.barfeed import yahoofeed
 
 f = open('stock.txt', 'r')
 symbols_list = [f.readline()[:-1],f.readline()]
-#['AAPL', 'TSLA']brevity, 'YHOO','MSFT','ALTR','WDC','KLAC', 'BAC', 'KMI' ,'SUNE', 'HPQ', 'FCX', 'GE', 'PBR', 'BABA', 'ITUB', 'XOM', 'C', 'EMC', 'MPLX', 'CNX' ,'NRG', 'S', 'EPD', 'WMT', 'ORCL']
-#120MB of test data for classifiers! 
+
 print symbols_list
 
 if os.path.isfile(symbols_list[0]+'-'+symbols_list[1]+'.csv')==False: 
