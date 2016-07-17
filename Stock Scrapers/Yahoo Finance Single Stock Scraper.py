@@ -81,6 +81,7 @@ if os.path.isfile(f) == False:
     
     #Naming Files
     inFile = open(symbols_list[0]+'.csv', 'r')
+    symbols_list[0] + '-Scraped_' + str(now.hour) + '-' + str(now.minute) + '.csv';
     outFile =  open(f, 'w')
 
     #Removing Duplicates and implementation for bug fix
@@ -97,10 +98,6 @@ if os.path.isfile(f) == False:
             continue;
         
         if is_today == 1 and the_year not in line:
-            continue;
-
-        if first_row == 1:
-            first_row = 0
             continue;
         
         else:
