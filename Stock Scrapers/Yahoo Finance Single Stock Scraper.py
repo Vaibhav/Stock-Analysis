@@ -93,6 +93,7 @@ if os.path.isfile(f) == False:
         #Keep the first line
         if line.startswith('Date'):
             outFile.write(line)
+            listLine.append(line)
         
         if line in listLine:
             continue;
