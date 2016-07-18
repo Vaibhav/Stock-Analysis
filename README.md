@@ -1,4 +1,4 @@
-# Stock-Analysis
+# Analyzing Data of Stocks
 
 My code to perform different types of analysis on stocks data. 
 
