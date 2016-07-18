@@ -4,16 +4,16 @@ My code to perform different types of analysis on stocks data.
 
 ---
 
-**Stocks Scrapers**
+1. **Stocks Scrapers**
 
 
-**Visualizing the scraped stock data**
+2. **Visualizing the scraped stock data**
 
 
-**Stock Regression**
+3. **Stock Regression**
 
 
-##### More to add soon 
+## More to add soon 
 
 
-_Machine learning to predict stock price_
+Machine learning to predict stock price
