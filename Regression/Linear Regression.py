@@ -25,26 +25,40 @@ with open(f, 'r') as file:
 		dates.append(int(row[0].split('/')[0]))
 
 #convert lists to numpy arrays
+length_of_dates = len(dates) + 1;
+day = []
+day.extend(range(1, length_of_dates))
+
 prices_arr = np.reshape(close_prices, (len(close_prices), 1))
-dates_arr = np.reshape(dates, (len(dates), 1))
+days_arr = np.reshape(day, (len(day), 1))
 
 
 #Creating lin reg object
 regr = linear_model.LinearRegression()
-regr.fit(dates_arr, prices_arr)
+regr.fit(days_arr, prices_arr)
 
 print 'Coefficients: '
 print regr.coef_
 
 # Explained variance score: 1 is perfect prediction
-print 'Variance score: %.2f' % regr.score(dates_arr, prices_arr)
+print 'Variance score: %.2f' % regr.score(days_arr, prices_arr)
+
+
+minpr = min(close_prices)
+maxpr = max(close_prices)
+
+maxdt = max(day)
+mindt = min(day)
 
 #Draw black dots representing prices
-plt.scatter(dates_arr, prices_arr, color = 'black', label = 'Close Prices')
-plt.plot(dates_arr, regr.predict(dates_arr), color = 'red', linewidth = 4, label = 'Estimated Linear Function')
-plt.xlabel('Date')
+plt.figure(figsize=(15,15), dpi=240)
+plt.scatter(days_arr, prices_arr, color = 'black', label = 'Close Prices')
+plt.plot(days_arr, regr.predict(days_arr), color = 'red', linewidth = 4, label = 'Estimated Linear Function')
+plt.xlabel('Day')
 plt.ylabel('Close Price')
 plt.title('Linear Regression')
+plt.ylim([minpr - 3, maxpr + 3])
+plt.xlim([mindt - 1, maxdt + 5])
 plt.subplots_adjust(bottom=0.13)
 plt.subplots_adjust(top=0.92)
 plt.subplots_adjust(left=0.07)
