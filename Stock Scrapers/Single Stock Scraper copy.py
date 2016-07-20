@@ -7,7 +7,7 @@
    Script outputs a CSV file with open/high/low/close/volume for given stock
 '''
 ##############
-
+import timeit
 import datetime
 import pandas as pd
 import shutil
@@ -21,6 +21,7 @@ from pyalgotrade.barfeed import yahoofeed
 
 month = 12
 business_days = 20
+start = timeit.default_timer()
 
 months =  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -114,3 +115,7 @@ if os.path.isfile(f) == False:
     print "Finished writing - Check Datasets Folder"
 	
 ######################################################
+
+stop = timeit.default_timer()
+
+print stop - start
