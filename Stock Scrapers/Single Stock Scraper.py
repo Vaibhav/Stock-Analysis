@@ -18,6 +18,7 @@ import matplotlib.dates as mdates
 from pandas import DataFrame
 from pandas_datareader import data as dr
 from pyalgotrade.barfeed import yahoofeed
+import fileinput
 
 start = timeit.default_timer()
 month = 12
@@ -26,7 +27,7 @@ months =  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augu
 
 
 
-def get_data(symbols_list, year):
+def get_data(symbols_list, year, asc):
 
     now = datetime.datetime.now()
     f = symbols_list[0] + '-Scraped_' + str(now.hour) + '-' + str(now.minute) + '.csv';
@@ -74,37 +75,56 @@ def remove_dup(symbols_list, now, the_year, is_today):
 
     f = symbols_list[0] + '-Scraped_' + str(now.hour) + '-' + str(now.minute) + '.csv';
     #Naming Files
-    inFile = open(symbols_list[0]+'.csv', 'r')
-    symbols_list[0] + '-Scraped_' + str(now.hour) + '-' + str(now.minute) + '.csv';
-    outFile =  open(f, 'w')
+    #inFile = open(symbols_list[0]+'.csv', 'r')
+    #outFile =  open(f, 'w')
 
     #Removing Duplicates and implementation for bug fix
-    listLine = []
-    the_year = '/' + the_year
+    #listLine = []
+    fileyear = str(the_year)
     
+    the_year = '/' + the_year
+
+    #seen = set() # set for fast O(1) amortized lookup
+
+    toclean = pd.read_csv(symbols_list[0]+'.csv', header = None)
+    deduped = toclean.drop_duplicates()
+    deduped.to_csv(f)
+
+    with open(f,"rb") as source:
+        rdr = csv.reader(source)
+        rdr.next()
+        with open(symbols_list[0]+fileyear+'.csv',"wb") as result:
+            wtr = csv.writer(result)
+            for r in rdr:
+                    wtr.writerow( (r[1], r[2], r[3], r[4], r[5], r[6]))
+    
+    '''
     for line in inFile:
+        
+        if line in seen:
+            continue;
+        
+        if is_today == 1 and the_year not in seen:
+            continue;
 
         #Keep the first line
         if line.startswith('Date'):
             outFile.write(line)
-            listLine.append(line)
-        
-        if line in listLine:
-            continue;
-        
-        if is_today == 1 and the_year not in line:
+            seen.add(line)
             continue;
         
         else:
             outFile.write(line)
-            listLine.append(line)
-		
-    outFile.close()
-    inFile.close()
+            seen.add(line)
+    '''
+    
+    #outFile.close()
+    #inFile.close()
     os.remove(symbols_list[0]+'.csv')
-
+    os.remove(f)
+    
     #Saves file in Datasets folder
-    shutil.move(f, "Datasets/")
+    shutil.move(symbols_list[0]+fileyear+'.csv', "Datasets/")
     print "Finished writing - Check Datasets Folder"
 	
 ######################################################
@@ -126,7 +146,7 @@ print 'Enter 1 if you want the oldest prices at the top. \n'
 asc = raw_input('Enter 0 if you want the most recent prices at the top: \n')
 asc = int(asc)
 
-tempo = get_data(symbols_list, year)
+tempo = get_data(symbols_list, year, asc)
 now = tempo[0]
 is_today = tempo[1]
 
