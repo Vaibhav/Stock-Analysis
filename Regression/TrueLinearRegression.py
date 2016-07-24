@@ -31,18 +31,16 @@ def get_data(f, close_prices, dates):
     return days, close_prices
             
 def linear_regression(x, y):
-    # Basic computations to save a little time.
     length_of_x = len(x)
-    sum_x = sum(x)
-    sum_y = sum(y)
+    sum_of_x = sum(x)
+    sum_of_y = sum(y)
 
-    # Σx^2, and Σxy respectively.
-    sum_x_squared = sum(map(lambda m: m * m, x))
+    sum_of_x_squared = sum(map(lambda m: m * m, x))
     
-    sum_of_products = sum([x[i] * y[i] for i in range(length_of_x)])
+    sum_of_products = sum([x[i] * y[i] for i in range(0,length_of_x)])
 
-    m = (sum_of_products - (sum_x * sum_y) / length_of_x) / (sum_x_squared - ((sum_x ** 2) / length_of_x))
-    b = (sum_y - m * sum_x) / length_of_x
+    m = (sum_of_products - (sum_of_x * sum_of_y) / length_of_x) / (sum_of_x_squared - ((sum_of_x ** 2) / length_of_x))
+    b = (sum_of_y - m * sum_of_x) / length_of_x
     tmp = [m, b]
     return tmp
 
