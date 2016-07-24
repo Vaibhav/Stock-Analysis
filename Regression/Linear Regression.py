@@ -24,14 +24,17 @@ with open(f, 'r') as file:
 		close_prices.append(float("{0:.2f}".format(x)))
 		dates.append(int(row[0].split('/')[0]))
 
+
 #convert lists to numpy arrays
 length_of_dates = len(dates) + 1;
 day = []
 day.extend(range(1, length_of_dates))
-
+close_prices.reverse()
 prices_arr = np.reshape(close_prices, (len(close_prices), 1))
 days_arr = np.reshape(day, (len(day), 1))
 
+print close_prices
+print day
 
 #Creating lin reg object
 regr = linear_model.LinearRegression()
@@ -65,3 +68,5 @@ plt.subplots_adjust(left=0.07)
 plt.subplots_adjust(right=0.96)
 plt.legend()
 plt.show()
+
+
