@@ -1,10 +1,35 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as pl
 import csv
 
+def get_data(f, close_prices, dates):
 
+    if not(f.endswith('.csv')):
+        f = f + '.csv'
+
+    with open(f, 'r') as file:
+        the_data = csv.reader(file);
+        #Skip the row with headers
+        the_data.next()
+
+        for row in the_data:
+            #convert close price to float
+            x = float(row[4])
+            #convert close price to a price (2 decimal points)
+            close_prices.append(float("{0:.2f}".format(x)))
+            dates.append(int(row[0].split('/')[0]))
+            
+    length_of_dates = len(dates)
+    days = []
+    days.extend(range(1, length_of_dates+1))
+    
+    return days, close_prices
+            
 def linear_regression(x, y):
     # Basic computations to save a little time.
     length_of_x = len(x)
@@ -22,18 +47,34 @@ def linear_regression(x, y):
     return tmp
 
 
-y = [53.52, 52.97, 52.7, 53.32, 52.78, 52.8, 52.02, 50.85, 48.89, 47.65, 47.35, 46.66, 47.01, 46.65, 45.9, 45.24, 45.73, 48.49, 47.23, 47.27, 47.56, 46.72, 47.55, 47.36, 46.88, 46.79, 46.2, 47.38, 46.18, 46.33, 46.24, 46.48, 47.14, 46.81]
-x = range(0, 34)
+close_prices = []
+dates = []
+f = raw_input('Enter filename: \n')
+x,y = get_data(f, close_prices, dates)
 
-y.reverse()
+temp = linear_regression(x,y)
 
-temp = linear_regression(x, y)
+maxx = max(x)
+maxy = max(y)
+miny = min(y)
 
 print temp
 m = float(temp[0])
 b = float(temp[1])
 
+# Predict next day price based on linear line
+# y = mx + b
+
+print ((m * (maxx + 1)) + b)
+
+pl.figure(figsize=(7,5), dpi=120)
 pl.scatter(x, y, color = 'black', label = 'Close Prices')
-pl.plot(x,m*np.asarray(x) + b)
+pl.plot(x,m*np.asarray(x) + b, color = 'red', linewidth =  4, label = "Linear Regression Model")
+pl.xlabel('Day')
+pl.ylabel('Close Price')
+pl.title('Linear Regression')
+pl.xlim([0, maxx + 1])
+pl.ylim([miny - 5, maxy + 5])
 pl.grid()
+pl.legend()
 pl.show()
