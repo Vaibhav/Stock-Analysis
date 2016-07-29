@@ -50,6 +50,8 @@ dates = []
 f = raw_input('Enter filename: \n')
 x,y = get_data(f, close_prices, dates)
 
+rev = raw_input('Is the newest price first? (y/n)')
+if rev.startswith('y'): y.reverse();
 temp = linear_regression(x,y)
 
 maxx = max(x)

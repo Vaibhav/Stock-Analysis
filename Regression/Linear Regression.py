@@ -29,7 +29,10 @@ with open(f, 'r') as file:
 length_of_dates = len(dates) + 1;
 day = []
 day.extend(range(1, length_of_dates))
-###close_prices.reverse()
+
+rev = raw_input('Is the newest price first? (y/n)')
+if rev.startswith('y'): close_prices.reverse();
+
 prices_arr = np.reshape(close_prices, (len(close_prices), 1))
 days_arr = np.reshape(day, (len(day), 1))
 
