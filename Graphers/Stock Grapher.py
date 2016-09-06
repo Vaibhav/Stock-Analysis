@@ -6,7 +6,7 @@ import numpy as np
 
 symbols_list = ['AAPL', 'MSFT']
 
-f = open('AAPL to MSFT.csv')
+f = open('NVDA2016.csv')
 stock = csv.reader(f)
 stock.next()
 

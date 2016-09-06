@@ -47,25 +47,25 @@ def get_data(symbols_list, year, asc):
         for ticker in symbols_list:
             print ticker
             i,j = 0,0
-        
+
             for i in range (0,month):
                 print months[i]
-				
+
                 for j in range(0,business_days):
-				
+
                     print j+1
-                
+
                     #Use Yahoo Finance API to retrive stock data for given day and month
                     temp = dr.DataReader(ticker, "yahoo", start=datetime.datetime(year, i+1, j+1))
-               
-                    temp['Symbol'] = ticker 
+
+                    temp['Symbol'] = ticker
                     symbols.append(temp)
                     j += 1
-    
+
                 i += 1
-			
+
         df = pd.concat(symbols)
-	
+
         cell= df[['Open','High','Low','Close','Volume']]
         cell.reset_index().sort_values(['Date'], ascending=[asc]).set_index('Date').to_csv(symbols_list[0]+'.csv', date_format='%d/%m/%Y')
         tmp = [now, is_today]
@@ -81,7 +81,7 @@ def remove_dup(symbols_list, now, the_year, is_today):
     #Removing Duplicates and implementation for bug fix
     #listLine = []
     fileyear = str(the_year)
-    
+
     the_year = '/' + the_year
 
     #seen = set() # set for fast O(1) amortized lookup
@@ -97,13 +97,13 @@ def remove_dup(symbols_list, now, the_year, is_today):
             wtr = csv.writer(result)
             for r in rdr:
                     wtr.writerow( (r[1], r[2], r[3], r[4], r[5], r[6]))
-    
+
     '''
     for line in inFile:
-        
+
         if line in seen:
             continue;
-        
+
         if is_today == 1 and the_year not in seen:
             continue;
 
@@ -112,31 +112,31 @@ def remove_dup(symbols_list, now, the_year, is_today):
             outFile.write(line)
             seen.add(line)
             continue;
-        
+
         else:
             outFile.write(line)
             seen.add(line)
     '''
-    
+
     #outFile.close()
     #inFile.close()
     os.remove(symbols_list[0]+'.csv')
     os.remove(f)
-    
+
     #Saves file in Datasets folder
     shutil.move(symbols_list[0]+fileyear+'.csv', "Datasets/")
     print "Finished writing - Check Datasets Folder"
-	
+
 ######################################################
 
 
 
 #Ask user to input ticker
-the_stock = raw_input('Enter Stock Ticker Code: \n')
+the_stock = raw_input('\nEnter Stock Ticker Code: \n')
 the_stock = the_stock.upper().strip()
 symbols_list = [the_stock]
 
-#Asks user to input starting year 
+#Asks user to input starting year
 year = raw_input('Enter starting year: \n')
 the_year = year.strip()
 year = year.strip()

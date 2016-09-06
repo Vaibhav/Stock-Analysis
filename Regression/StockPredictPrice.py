@@ -1,29 +1,30 @@
-# Linear Regression for Stock based on Date 
+# Linear Regression for Stock based on Date
 # Currently only works for month
 # http://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#example-linear-model-plot-ols-py
 
 import csv
-import numpy as np 
+import numpy as np
 from sklearn import datasets, linear_model
 from sklearn.svm import SVR
 import matplotlib.pyplot as plt
 
 close_prices = []
-dates = [] 
+dates = []
 
 f = raw_input('Enter filename: \n')
 
 if not(f.endswith('.csv')):
 	f = f + '.csv'
-	
+
 with open(f, 'r') as file:
 	the_data = csv.reader(file);
 	the_data.next()
-	
+
 	for row in the_data:
+		print row
 		x = float(row[4])
 		close_prices.append(float("{0:.2f}".format(x)))
-		dates.append(int(row[0].split('/')[0]))
+		dates.append(int(row[0]))#.split('/')[0]))
 
 # convert lists to numpy arrays
 # length_of_dates = len(dates) + 1;
