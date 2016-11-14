@@ -24,17 +24,17 @@ with open(f, 'r') as file:
 		print row
 		x = float(row[4])
 		close_prices.append(float("{0:.2f}".format(x)))
-		dates.append(int(row[0]))#.split('/')[0]))
+		dates.append(int(row[0].split('/')[0]))
 
 # convert lists to numpy arrays
-# length_of_dates = len(dates) + 1;
-# day = []
-# day.extend(range(1, length_of_dates))
+length_of_dates = len(dates) + 1;
+day = []
+day.extend(range(1, length_of_dates))
 
 prices_arr = np.reshape(close_prices, (len(close_prices), 1))
-# days_arr = np.reshape(day, (len(day), 1))
+days_arr = np.reshape(day, (len(day), 1))
 
-days_arr = np.reshape(dates, (len(dates), 1))
+#days_arr = np.reshape(dates, (len(dates), 1))
 
 print '0'
 # Fit regression model
