@@ -47,11 +47,13 @@ This barely makes a difference to the naked eye. The two graphs are very similar
 
 ### Todo
 
-- SVM Regression
-- Use Machine Learning to predict stock close price for the next day
+- **SVM Regression WIP**
+
+- Use Machine Learning algorithms to predict stock close price for the next day
 - <del> Algorithm for high frequency trading (UVXY - Price for this data fluctuates every minute) </del> ** Now deployed on Quantopian **
 - Add data visualization with technical indicators such as moving average, volume, STOCH. 
 - Display technical analysis based on stock prices. 
+- Add Ratio Analysis & compare ratio with competitors' ratios. (Allow users to define competitors' ratios)
 - In the future, add sentimental analysis using StockTwits 
 - Add Stock screener, to screen through every stock and see which ones are best buys. Deploy buys on simulators. 
 
