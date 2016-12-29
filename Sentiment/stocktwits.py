@@ -3,6 +3,7 @@ import urllib2
 import json
 import datetime
 
+
 def get_tweets(ticker):
     url = "https://api.stocktwits.com/api/2/streams/symbol/{0}.json".format(ticker)
     connection = urllib2.urlopen(url)
@@ -45,21 +46,32 @@ def write_to_file(filename, data):
         json.dump(data, f, sort_keys=True, indent=4, separators=(',', ':'))
 
 
-
-FILENAME = "stocktwits.json"  # change as necessary
-
-if __name__ == "__main__":
-
-	print "Reading tickers from \"tickers.txt\":"
+def read_tickers():
+    print "Reading tickers from \"tickers.txt\":"
     f = open("tickers.txt", 'r')
     names = []
     for line in f:
         line = line.strip('\n')
         line = line.strip('\t')
         names.append(line);
+    print names
+    return names
 
-    print names + "\n"
+FILENAME = "stocktwits.json"  # change as necessary
 
-    twitdata = get_tweets_list(names)
-    twitdata = remove_old(twitdata)
-    write_to_file(FILENAME, twitdata)
+if __name__ == "__main__":
+
+    print "Do you want to specify name of file?"
+    x = raw_input()
+
+    if x.startswith("y") or x.startswith("Y"):
+        print "What is file name?"
+        filename = raw_input()
+        if not (filename.endswith(".json")):
+            filename = filename + ".json";
+        FILENAME = filename;
+
+    codes = read_tickers();
+    twitdata = get_tweets_list(codes);
+    twitdata = remove_old(twitdata);
+    write_to_file(FILENAME, twitdata);
