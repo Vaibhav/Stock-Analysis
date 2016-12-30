@@ -43,9 +43,10 @@ def read_tickers():
     names = []
     # read tickers from tickers.txt
     for line in f:
-        line = line.strip('\n')
-        line = line.strip('\t')
-        names.append(line);
+		line = line.strip('\n')
+		line = line.upper()
+		line = line.strip('\t')
+		names.append(line)
     print names
     return names
 
