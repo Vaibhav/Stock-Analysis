@@ -70,7 +70,7 @@ FILENAME = "stocktwits.json"
 if __name__ == "__main__":
 
     # Optional file output
-    print("Do you want to specify name of file?")
+    print("Do you want to specify name of output file?")
     x = input()
 
     # Execute this code if option is taken
