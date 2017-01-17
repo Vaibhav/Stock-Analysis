@@ -109,12 +109,12 @@ for u in symbolslist:
 for b in threadlist:
     b.join()
 
-print(('# of threads: ' + str(len(threadlist))))
+print('# of threads: ' + str(len(threadlist)))
 # close file
 myfile.close()
 # timer
 stop = timeit.default_timer()
-print((stop - start))
+print(stop - start)
 
 
 ###############################################
