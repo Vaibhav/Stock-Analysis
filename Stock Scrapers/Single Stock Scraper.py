@@ -89,9 +89,9 @@ def remove_dup(symbols_list, now, the_year, is_today):
     deduped = toclean.drop_duplicates()
     deduped.to_csv(f)
 
-    with open(f, "rb") as source:
-        temp = csv.reader(source)
-        rdr = temp.read()[1:]
+    with open(f, "r") as source:
+        rdr = csv.reader(source)
+        next(rdr, None)
         with open(symbols_list[0] + fileyear + '.csv', "wb") as result:
             wtr = csv.writer(result)
             for r in rdr:
@@ -150,7 +150,7 @@ tempo = get_data(symbols_list, year, asc)
 now = tempo[0]
 is_today = tempo[1]
 
-remove_dup(symbols_list, now, the_year, is_today)
+# remove_dup(symbols_list, now, the_year, is_today)
 
 stop = timeit.default_timer()
 
