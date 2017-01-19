@@ -44,14 +44,14 @@ def get_data(symbols_list, year, asc):
 
         # Getting the Data for each day
         for ticker in symbols_list:
-            print(ticker)
+            print ticker
             i, j = 0, 0
 
             for i in range(0, month):
-                print(months[i])
+                print months[i]
 
                 for j in range(0, business_days):
-                    print(j + 1)
+                    print j + 1
 
                     # Use Yahoo Finance API to retrive stock data for given day and month
                     temp = dr.DataReader(ticker, "yahoo", start=datetime.datetime(year, i + 1, j + 1))
@@ -90,8 +90,8 @@ def remove_dup(symbols_list, now, the_year, is_today):
     deduped.to_csv(f)
 
     with open(f, "rb") as source:
-        temp = csv.reader(source)
-        rdr = temp.read()[1:]
+        rdr = csv.reader(source)
+        rdr.next()
         with open(symbols_list[0] + fileyear + '.csv', "wb") as result:
             wtr = csv.writer(result)
             for r in rdr:
@@ -124,7 +124,7 @@ def remove_dup(symbols_list, now, the_year, is_today):
 
     # Saves file in Datasets folder
     shutil.move(symbols_list[0] + fileyear + '.csv', "Datasets/")
-    print("Finished writing - Check Datasets Folder")
+    print "Finished writing - Check Datasets Folder"
 
 
 ######################################################
@@ -132,18 +132,18 @@ def remove_dup(symbols_list, now, the_year, is_today):
 
 
 # Ask user to input ticker
-the_stock = input('\nEnter Stock Ticker Code: \n')
+the_stock = raw_input('\nEnter Stock Ticker Code: \n')
 the_stock = the_stock.upper().strip()
 symbols_list = [the_stock]
 
 # Asks user to input starting year
-year = input('Enter starting year: \n')
+year = raw_input('Enter starting year: \n')
 the_year = year.strip()
 year = year.strip()
 
 # Ask user if they want ascending order or descending order
-print('Enter 1 if you want the oldest prices at the top. \n')
-asc = input('Enter 0 if you want the most recent prices at the top: \n')
+print 'Enter 1 if you want the oldest prices at the top. \n'
+asc = raw_input('Enter 0 if you want the most recent prices at the top: \n')
 asc = int(asc)
 
 tempo = get_data(symbols_list, year, asc)
@@ -154,4 +154,4 @@ remove_dup(symbols_list, now, the_year, is_today)
 
 stop = timeit.default_timer()
 
-print(stop - start)
+print stop - start
