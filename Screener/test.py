@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import sys
+import time
 
 from yahoo_finance import Share
 
@@ -12,7 +13,7 @@ def analyze(dma10, dma20, ticker):
 	twentyDayAvg = sum(dma20) / float(len(dma20))
 	print tenDayAvg
 	print twentyDayAvg
-	theRange = 0.02 * tenDayAvg
+	theRange = 0.005 * tenDayAvg
 	if tenDayAvg - theRange < twentyDayAvg or twentyDayAvg < tenDayAvg + theRange:
 		masterlist.append(ticker)
 
@@ -23,7 +24,11 @@ def get_ma(stock):
 	stock = Share(stock)
 	dma_10 = now - timedelta(days=30)
 	date10 = str(dma_10.year) + "-" + str(dma_10.month) + "-" + str(dma_10.day);
-	data = stock.get_historical(date10, theDate)
+	time.sleep(0.5)
+	try:
+		data = stock.get_historical(date10, theDate)
+	except:
+		return 0,0
 	count = 0
 	for theData in data:
 		if count < 10:
@@ -43,9 +48,28 @@ def get_ma(stock):
 	return prices_10, prices_20
 	
 
-stocks = ['AMD']
+	
+def read_tickers():
+    print("Reading tickers from \"tickers.txt\":")
+    f = open("tickers2.txt", 'r')
+    names = []
+    # read tickers from tickers.txt
+    for line in f:
+    	line = line.strip('\n')
+    	line = line.upper()
+    	line = line.strip('\t')
+    	names.append(line)
+    print(names)
+    return names
+
+
+stocks = read_tickers()
 for s in stocks:
 	dma10, dma20 = get_ma(s)
-	analyze(dma10, dma20, s)
+	if dma10 == 0 or dma20 == 0:
+		continue
+	else:
+		print s
+		analyze(dma10, dma20, s)
 
 print masterlist
