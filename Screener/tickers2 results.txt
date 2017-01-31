@@ -4,6 +4,8 @@ Major List:
 []
 Minor List
 ['MTL', 'CCRC', 'EBR', 'HCLP', 'CLD', 'PNC.W', 'TROX', 'CRNT', 'CNXC', 'TCBI']
+Bullish:  'HCLP', 'CLD', 'PNC.W', TCBI
+Watch: CNXC
 
 
 For 2.0% range
