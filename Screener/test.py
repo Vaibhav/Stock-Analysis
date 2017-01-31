@@ -4,18 +4,21 @@ import time
 
 from yahoo_finance import Share
 
-masterlist = [] 
+masterlist = []
+minorlist = [] 
 now = datetime.now()
 theDate = str(now.year) + "-" + str(now.month) + "-" + str(now.day);
 
-def analyze(dma10, dma20, ticker):
+def analyze(dma10, dma20, dma50, ticker):
 	tenDayAvg = sum(dma10) / float(len(dma10))
 	twentyDayAvg = sum(dma20) / float(len(dma20))
 	print tenDayAvg
 	print twentyDayAvg
 	theRange = 0.005 * tenDayAvg
-	if tenDayAvg - theRange < twentyDayAvg or twentyDayAvg < tenDayAvg + theRange:
-		masterlist.append(ticker)
+	if tenDayAvg - theRange < twentyDayAvg and twentyDayAvg < tenDayAvg + theRange:
+		minorlist.append(ticker)
+		if tenDayAvg - theRange < dma50 and dma50 < tenDayAvg + theRange:
+			masterlist.append(ticker)
 
 
 def get_ma(stock):
@@ -27,8 +30,9 @@ def get_ma(stock):
 	time.sleep(0.5)
 	try:
 		data = stock.get_historical(date10, theDate)
+		prices_50 = stock.get_50day_moving_avg()
 	except:
-		return 0,0
+		return 0,0,0
 	count = 0
 	for theData in data:
 		if count < 10:
@@ -36,7 +40,6 @@ def get_ma(stock):
 			prices_10.append(float(theData['Adj_Close']))
 		else:
 			continue
-	print prices_10
 	count = 0
 	for theData in data:
 		if count < 20:
@@ -44,8 +47,8 @@ def get_ma(stock):
 			prices_20.append(float(theData['Adj_Close']))
 		else:
 			continue
-	print prices_20
-	return prices_10, prices_20
+	print prices_50
+	return prices_10, prices_20, prices_50
 	
 
 	
@@ -65,11 +68,15 @@ def read_tickers():
 
 stocks = read_tickers()
 for s in stocks:
-	dma10, dma20 = get_ma(s)
-	if dma10 == 0 or dma20 == 0:
+	dma10, dma20, dma50 = get_ma(s)
+	if dma10 == 0 or dma20 == 0 or dma50 == 0:
 		continue
 	else:
 		print s
-		analyze(dma10, dma20, s)
+		analyze(dma10, dma20, dma50, s)
 
+
+print "Major List:"
 print masterlist
+print "Minor List"
+print minorlist
