@@ -1,3 +1,8 @@
+'''
+Author: Vaibhav Khaitan
+Date: 1/30/2017
+Description: Script attempts to filter out stocks which can be used for quantified moving average strategy. 
+'''
 from datetime import datetime, timedelta
 import sys
 import time
