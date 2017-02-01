@@ -19,7 +19,7 @@ def analyze(dma10, dma20, dma50, ticker):
 	twentyDayAvg = sum(dma20) / float(len(dma20))
 	print tenDayAvg
 	print twentyDayAvg
-	theRange = 0.01 * tenDayAvg
+	theRange = 0.005 * tenDayAvg
 	if tenDayAvg - theRange < twentyDayAvg and twentyDayAvg < tenDayAvg + theRange:
 		minorlist.append(ticker)
 		if tenDayAvg - theRange < dma50 and dma50 < tenDayAvg + theRange:
