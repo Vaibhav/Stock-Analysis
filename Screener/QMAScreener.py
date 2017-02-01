@@ -19,7 +19,7 @@ def analyze(dma10, dma20, dma50, ticker):
 	twentyDayAvg = sum(dma20) / float(len(dma20))
 	print tenDayAvg
 	print twentyDayAvg
-	theRange = 0.02 * tenDayAvg
+	theRange = 0.01 * tenDayAvg
 	if tenDayAvg - theRange < twentyDayAvg and twentyDayAvg < tenDayAvg + theRange:
 		minorlist.append(ticker)
 		if tenDayAvg - theRange < dma50 and dma50 < tenDayAvg + theRange:
@@ -30,6 +30,8 @@ def get_ma(stock):
 	prices_10 = []
 	prices_20 = []
 	stock = Share(stock)
+	if (stock.get_price() < 5):
+		return 0,0,0
 	dma_10 = now - timedelta(days=30)
 	date10 = str(dma_10.year) + "-" + str(dma_10.month) + "-" + str(dma_10.day);
 	time.sleep(0.5)
@@ -59,7 +61,7 @@ def get_ma(stock):
 	
 def read_tickers():
     print("Reading tickers from \"tickers.txt\":")
-    f = open("tickers2.txt", 'r')
+    f = open("tickers.txt", 'r')
     names = []
     # read tickers from tickers.txt
     for line in f:
