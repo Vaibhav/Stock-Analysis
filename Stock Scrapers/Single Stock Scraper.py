@@ -13,7 +13,6 @@ import pandas as pd
 import shutil
 import csv
 import os
-import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pandas import DataFrame
 from pandas_datareader import data as dr
