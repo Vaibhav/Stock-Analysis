@@ -27,6 +27,8 @@ DateNow = str(now.year) + "-" + str(now.month) + "-" + str(now.day);
 
 SPY = {}
 ticker = ""
+startDate = ""
+givenStock = {}
 
 def getSP500():
 	global SPY
@@ -49,17 +51,51 @@ def getSP500():
 			tmp.append(volume)
 			tmp.append(adjclose)
 			SPY[date] = tmp
-		
 
+
+
+
+def  getStockData(theTicker):
+	global startDate, givenStock
+	stock = Share(theTicker)
+	print("Getting Data for ... " + theTicker)
+	print(startDate)
+	data = stock.get_historical(startDate, DateNow)
+	for d in data:
+		tmp = []
+		volume = int(d['Volume'])
+		adjclose = float(d['Adj_Close'])
+		high = float(d['High'])
+		low = float(d['Low'])
+		close = float(d['Close'])
+		date = d['Date']
+		open = float(d['Open'])
+		newDate = datetime.strptime(date, "%Y-%m-%d")
+		tmp.append(open)
+		tmp.append(high)
+		tmp.append(low)
+		tmp.append(close)
+		tmp.append(volume)
+		tmp.append(adjclose)
+		givenStock[newDate] = tmp
+		
+		
+		
+		
 def AskUser():
 	global ticker, startDate
 	if version < 3:
 		ticker = raw_input("Please enter a ticker...\n")
-		print("Do you want to specify a date? (Y/N)  \n")
+		print("Do you want to specify a date? (Y/N) ")
 		needDate = raw_input()
 		if needDate.startswith("y") or needDate.startswith("Y"):
 			start = raw_input("When do you want to start comparison? (YYYY-MM-DD)  \n")
-			startDate = datetime.strptime(start, "%Y-%m-%d")
+			# startDate = datetime.strptime(start, "%Y-%m-%d")
+			startDate = start
+		else:
+			# startDate = datetime.strptime("2009-01-02", "%Y-%m-%d")
+			startDate = "2009-01-02"
+		return ticker 
 	else:
 		ticker = input("Please enter a ticker...\n")
 		print("Do you want to specify a date? (Y/N) \n")
@@ -67,8 +103,14 @@ def AskUser():
 		if needDate.startswith("y") or needDate.startswith("Y"):
 			start = input("When do you want to start comparison? (YYYY-MM-DD) \n")
 			startDate = datetime.strptime(start, "%Y-%m-%d")
-
+		else:
+			startDate = datetime.strptime("2009-01-02", "%Y-%m-%d")
+		return ticker 
+			
+			
+			
+			
+		
 if __name__ == '__main__':
-	AskUser()
-	
-
+	theTicker = AskUser()
+	getStockData(theTicker)
