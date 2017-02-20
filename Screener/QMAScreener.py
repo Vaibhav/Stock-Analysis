@@ -61,7 +61,7 @@ def get_ma(stock):
 	
 def read_tickers():
     print("Reading tickers from \"tickers.txt\":")
-    f = open("tickers.txt", 'r')
+    f = open("tickers/tickers.txt", 'r')
     names = []
     # read tickers from tickers.txt
     for line in f:

@@ -23,7 +23,7 @@ with open(f, 'r') as file:
 	for row in the_data:
 		x = float(row[4])
 		close_prices.append(float("{0:.2f}".format(x)))
-		dates.append(int(row[0].split('/')[0]))
+		dates.append(int(row[0].split('-')[0]))
 
 #convert lists to numpy arrays
 length_of_dates = len(dates) + 1;
