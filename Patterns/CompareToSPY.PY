@@ -55,17 +55,17 @@ def AskUser():
 	global ticker, startDate
 	if version < 3:
 		ticker = raw_input("Please enter a ticker...\n")
-		print("Do you want to specify a date? (Y/N)")
+		print("Do you want to specify a date? (Y/N)  \n")
 		needDate = raw_input()
 		if needDate.startswith("y") or needDate.startswith("Y"):
-			start = raw_input("When do you want to start comparison? (YYYY-MM-DD)")
+			start = raw_input("When do you want to start comparison? (YYYY-MM-DD)  \n")
 			startDate = datetime.strptime(start, "%Y-%m-%d")
 	else:
 		ticker = input("Please enter a ticker...\n")
-		print("Do you want to specify a date? (Y/N)")
+		print("Do you want to specify a date? (Y/N) \n")
 		needDate = input()
 		if needDate.startswith("y") or needDate.startswith("Y"):
-			start = input("When do you want to start comparison? (YYYY-MM-DD)")
+			start = input("When do you want to start comparison? (YYYY-MM-DD) \n")
 			startDate = datetime.strptime(start, "%Y-%m-%d")
 
 if __name__ == '__main__':
