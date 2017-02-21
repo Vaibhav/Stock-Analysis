@@ -46,21 +46,20 @@ def findItem(theList, item):
 
 
 def getSP500():
-	global SPY, SPYdata
 	with open('s-and-p-500-2009.csv', 'r') as source:
 		rdr = csv.reader(source)
 		next(rdr, None)
 		for r in rdr:
 			tmp = []
 			date = r[0] # datetime.strptime(r[0], "%Y-%m-%d")
-			open = float(r[1])
+			day_open = float(r[1])
 			high = float(r[2])
 			low = float(r[3])
 			close = float(r[4])
 			volume = int(r[5])
 			adjclose =  float(r[6])
 			tmp.append(date)
-			tmp.append(open)
+			tmp.append(day_open)
 			tmp.append(high)
 			tmp.append(low)
 			tmp.append(close)
@@ -73,10 +72,10 @@ def getSP500():
 
 
 
-def  getStockData(theTicker):
-	global startDate, givenStock
-	stock = Share(theTicker)
+def getStockData(theTicker):
+	global startDate
 	print("Getting Data for ... " + theTicker)
+	stock = Share(theTicker)
 	print(startDate)
 	data = stock.get_historical(startDate, DateNow)
 	for d in data:
@@ -99,6 +98,49 @@ def  getStockData(theTicker):
 		givenStock.append(tmp)
 	return givenStock
 
+
+	
+# takes in datetime 
+def dayUpDown(theDate, data):
+	today = theDate.strftime("%Y-%m-%d")
+	ind = findItem(data, today)
+	if len(ind) < 1:
+		return 0
+	indx = ind[0][0]
+	point = data[indx]
+	open = point[1]
+	close = point[5]
+	
+	if close <	open:
+		return 1
+	elif close == open:
+		return 0
+	else:
+		return -1
+
+	
+# takes in datetime 
+def closeUpDown(theDate, data):
+	today = theDate.strftime("%Y-%m-%d")
+	tmp = theDate - timedelta(days=1);
+	yesterday = tmp.strftime("%Y-%m-%d")
+	ind = findItem(data, today)
+	ind2 = findItem(data, yesterday)
+	if len(ind) < 1 or len(ind2) < 1:
+		return 0
+	indx = ind[0][0]
+	indx2 = ind2[0][0]
+	point1 = data[indx]
+	point2 = data[indx2]
+	close1 = point1[5]
+	close2 = point2[5]
+	if close1 <	close2:
+		return 1
+	elif close2 == close1:
+		return 0
+	else:
+		return -1
+
 	
 # takes in datetime 
 def openUpDown(theDate, data):
@@ -107,8 +149,20 @@ def openUpDown(theDate, data):
 	yesterday = tmp.strftime("%Y-%m-%d")
 	ind = findItem(data, today)
 	ind2 = findItem(data, yesterday)
-	point1 = data[ind[0]]
-	point2 = data[ind2[0]]
+	if len(ind) < 1 or len(ind2) < 1:
+		return 0
+	indx = ind[0][0]
+	indx2 = ind2[0][0]
+	point1 = data[indx]
+	point2 = data[indx2]
+	open1 = point1[1]
+	close2 = point2[5]
+	if close2 <	open1:
+		return 1
+	elif close2 == open1:
+		return 0
+	else:
+		return -1
 	
 
 	
@@ -116,19 +170,148 @@ def openUpDown(theDate, data):
 def AskUser():
 	global ticker, startDate
 	ticker = input("Please enter a ticker...\n")
-	print("Do you want to specify a date? (Y/N) \n")
+	ticker = ticker.upper()
+	print("Do you want to specify a date? (Y/N) ")
 	needDate = input()
 	if needDate.startswith("y") or needDate.startswith("Y"):
-		start = input("When do you want to start comparison? (YYYY-MM-DD) \n")
+		start = input("When do you want to start comparison? (YYYY-MM-DD) ")
 		# startDate = datetime.strptime(start, "%Y-%m-%d")
 		startDate = start
 	else:
 		# startDate = datetime.strptime("2009-01-02", "%Y-%m-%d")
-		startDate = "2009-01-02"
-	return ticker 
+		startDate = start = "2009-01-02"
+	return ticker, start
 	
 	
 	
 if __name__ == '__main__':
-	theTicker = AskUser()
-	getStockData(theTicker)
+	SPYdata = getSP500()
+	theTicker, start = AskUser()
+	givenStock = getStockData(theTicker)
+	givenStock.reverse()
+	
+length = len(SPYdata)
+print(length)
+length = len(givenStock)
+print(length)
+
+dayUp = 0
+dayDown = 0
+dayNeutral = 0
+
+openUp = 0
+openDown = 0
+openNeutral = 0
+
+closeUp = 0
+closeDown = 0
+closeNeutral = 0
+
+
+
+for i in SPYdata:
+	curDate = i[0]
+	newDate = datetime.strptime(curDate, "%Y-%m-%d")
+	j = dayUpDown(newDate, SPYdata)
+	k = closeUpDown(newDate, SPYdata)
+	l = openUpDown(newDate, SPYdata)
+	if j == 1:
+		dayUp += 1
+	elif j == -1:
+		dayDown += 1
+	else:
+		dayNeutral += 1
+	
+	if k == 1:
+		closeUp += 1
+	elif k == -1:
+		closeDown += 1
+	else:
+		closeNeutral += 1
+		
+	if l == 1:
+		openUp += 1
+	elif l == -1:
+		openDown += 1
+	else:
+		openNeutral += 1
+
+"{0:.2f}".format(13.949999999999999)
+
+print("==========================" + "S&P 500" + "==========================") 
+print("Up Days: " + str(dayUp) + "   " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
+print("Down Days: " + str(dayDown) + "   " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
+print("Neutral Days: " + str(dayNeutral) + "   " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
+
+
+print("Up Open Days: " + str(openUp) + "   " + "{0:.2f}".format(100 * float(openUp)/float(length)) + "%")
+print("Down Open Days: " + str(openDown) + "   " + "{0:.2f}".format(100 * float(openDown)/float(length)) + "%")
+print("Neutral Open Days: " + str(openNeutral) + "    " + "{0:.2f}".format(100 * float(openNeutral-1)/float(length)) + "%")
+
+
+print("Up Close Days: " + str(closeUp) + "    " + "{0:.2f}".format(100 * float(closeUp)/float(length)) + "%")
+print("Down Close Days: " + str(closeDown) + "    " + "{0:.2f}".format(100 * float(closeDown)/float(length)) + "%")
+print("Neutral Close Days: " + str(closeNeutral) + "   " + "{0:.2f}".format(100 * float(closeNeutral-1)/float(length)) + "%")
+print("=====================================================================")
+
+dayUp = 0
+dayDown = 0
+dayNeutral = 0
+
+openUp = 0
+openDown = 0
+openNeutral = 0
+
+closeUp = 0
+closeDown = 0
+closeNeutral = 0
+j  = k = l = 0
+test = 0
+		
+for n in givenStock:
+	if test == 0:
+		test += 1
+		continue
+	curDate = n[0]
+	newDate = datetime.strptime(curDate, "%Y-%m-%d")
+	j = dayUpDown(newDate, givenStock)
+	k = closeUpDown(newDate, givenStock)
+	l = openUpDown(newDate, givenStock)
+	if j == 1:
+		dayUp += 1
+	elif j == -1:
+		dayDown += 1
+	else:
+		dayNeutral += 1
+	
+	if k == 1:
+		closeUp += 1
+	elif k == -1:
+		closeDown += 1
+	else:
+		closeNeutral += 1
+		
+	if l == 1:
+		openUp += 1
+	elif l == -1:
+		openDown += 1
+	else:
+		openNeutral += 1
+
+		
+		
+print("==========================" + theTicker + "==========================") 
+print("Up Days: " + str(dayUp) + "    " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
+print("Down Days: " + str(dayDown) + "    " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
+print("Neutral Days: " + str(dayNeutral) + "    " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
+
+
+print("Up Open Days: " + str(openUp) + "    " + "{0:.2f}".format(100 * float(openUp)/float(length)) + "%")
+print("Down Open Days: " + str(openDown) + "    " + "{0:.2f}".format(100 * float(openDown)/float(length)) + "%")
+print("Neutral Open Days: " + str(openNeutral) + "    " + "{0:.2f}".format(100 * float(openNeutral-1)/float(length)) + "%")
+
+
+print("Up Close Days: " + str(closeUp) + "    " + "{0:.2f}".format(100 * float(closeUp)/float(length)) + "%")
+print("Down Close Days: " + str(closeDown) + "    " + "{0:.2f}".format(100 * float(closeDown)/float(length)) + "%")
+print("Neutral Close Days: " + str(closeNeutral) + "    " + "{0:.2f}".format(100 * float(closeNeutral-1)/float(length)) + "%")
+print("=====================================================================")
