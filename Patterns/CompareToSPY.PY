@@ -238,7 +238,9 @@ for i in SPYdata:
 
 "{0:.2f}".format(13.949999999999999)
 
-print("==========================" + "S&P 500" + "==========================") 
+print("=====================================================================")
+print("==========================" + " S&P 500 " + "======================================")
+print("=====================================================================") 
 print("Up Days: " + str(dayUp) + "   " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
 print("Down Days: " + str(dayDown) + "   " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
 print("Neutral Days: " + str(dayNeutral) + "   " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
@@ -299,8 +301,9 @@ for n in givenStock:
 		openNeutral += 1
 
 		
-		
-print("==========================" + theTicker + "==========================") 
+print("=====================================================================")		
+print("==========================" + theTicker + "======================================")
+print("=====================================================================") 
 print("Up Days: " + str(dayUp) + "    " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
 print("Down Days: " + str(dayDown) + "    " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
 print("Neutral Days: " + str(dayNeutral) + "    " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
