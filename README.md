@@ -28,7 +28,7 @@ My method outputs a number with greater significant figures.
 
 ###Screenshots
 
-Using my regression method: 
+Using my regression model: 
 
 ![Linear Regression performed on NVDA Stock dat from January 2016](/Regression/NVDA2016.png)
 
