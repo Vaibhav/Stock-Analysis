@@ -1,7 +1,7 @@
 import os
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import json
-
+from pprint import pprint
 
 '''
 def sentimentScore(texts):
@@ -34,7 +34,21 @@ sentences = ["VADER is smart, handsome, and funny.",      # positive sentence ex
             "Today only kinda sux! But I'll get by, lol"  # mixed sentiment example with slang and constrastive conjunction "but"
              ]
 
-			 
+
+def read_tickers():
+    print("Reading tickers from \"tickers.txt\":")
+    f = open("tickers.txt", 'r')
+    names = []
+    # read tickers from tickers.txt
+    for line in f:
+    	line = line.strip('\n')
+    	line = line.upper()
+    	line = line.strip('\t')
+    	names.append(line)
+    print(names)
+    return names
+
+
 def sentimentScore(sentences):
 	analyzer = SentimentIntensityAnalyzer()
 	for sentence in sentences:
@@ -42,4 +56,12 @@ def sentimentScore(sentences):
 		print("vs: " + str(vs))
 		# print("{:-<65} {}".format(sentence, str(vs)))
 		
-sentimentScore(sentences)
+# sentimentScore(sentences)
+with open('feb22.json') as data_file:    
+    data = json.load(data_file)
+
+for i in data['AAPL']:
+	print(i['body'])
+	pprint(i['entities'])
+	
+
