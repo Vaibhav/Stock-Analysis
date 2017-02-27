@@ -1,4 +1,4 @@
-|  Fund Category 	|   Benchmark 	|   Funds that outperformed their benchmark for 3 years	|  Funds that OutPer in subsequent year	|  Funds that OutPer for 2 subsequent years 	|  Funds that OutPEr for 2 subsequent years 	|
+|  Fund Category 	|   Benchmark 	|  % of Funds that outperformed their benchmark for 3 years	| % of Funds that outperformed in subsequent year	| % of Funds that outperformed for 2 subsequent years 	| % of Funds that outperformed for 2 subsequent years 	|
 |---	|---	|---	|---	|---	|---	|
 |  Large Cap 	|  S&P 500 	|  30.83% 	|  33.93% 	|  13.62% 	|  5.17% 	|
 |  Mid Cap 	|  S&P MidCap400 	|  25.65% 	|  30.39% 	|  10.35% 	|  3.24% 	|
