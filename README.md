@@ -38,6 +38,13 @@ Using Sci-kit-learn API:
 
 This barely makes a difference to the naked eye. The two graphs are very similar. 
 
+#### New Screenshots 
+
+![AEIS February 20](AEIS-feb20.png)
+
+![Facebook February 20](FB-feb20.png)
+
+
 ## Version
 
 **1.0.0 - Released Stock Scraper**
