@@ -36,4 +36,5 @@
 
 ## February 28, 2017
 1. BIVV
-2. **AMD**
+2. **AMD** 
+3. AAPL (buy) 
