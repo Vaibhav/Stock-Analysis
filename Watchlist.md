@@ -34,3 +34,6 @@
 5. HTLD
 6. ETFC
 
+## February 28, 2017
+1. BIVV
+2. **AMD**
