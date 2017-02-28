@@ -24,6 +24,7 @@ version = sys.version_info[0]
 
 try:
     input = raw_input
+	range = xrange
 except NameError:
     pass
 
@@ -42,7 +43,7 @@ givenStock = []
 # b = index of element in the list 
 # [a, b]
 def findItem(theList, item):
-   return [(ind, theList[ind].index(item)) for ind in xrange(len(theList)) if item in theList[ind]]
+   return [(ind, theList[ind].index(item)) for ind in range(len(theList)) if item in theList[ind]]
 
 
 def getSP500():

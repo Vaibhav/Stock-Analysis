@@ -30,5 +30,7 @@
 1. AHT
 2. CCL
 3. FSLR
-
+4. WNC
+5. HTLD
+6. ETFC
 
