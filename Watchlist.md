@@ -15,11 +15,11 @@
 2. <del> RRC </del>
 3. UPS
 4. INT
-5. NCMI (trend reversal)
-6. FRO (doing some weird stuff) 
+5. **NCMI** (trend reversal)
+6. **FRO** (doing some weird stuff) 
 7. CNQ
 8. CRMT 
-9. HRB (trend reversal)
+9. **HRB** (trend reversal)
 10. <del> SDRL </del>
 11. COLM
 12. SPH (possible trend reversal)
@@ -32,10 +32,10 @@
 3. FSLR 
 4. WNC 
 5. HTLD
-6. ETFC (expected drop)
+6. **ETFC** (expected drop)
 
 ## February 28, 2017
 1. BIVV
 2. **AMD** 
-3. AAPL (buy - support touch, will bound back)
+3. **AAPL** (buy - support touch, will bound back)
 4. 
