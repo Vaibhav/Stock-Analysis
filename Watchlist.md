@@ -1,4 +1,6 @@
-# February 23, 2017
+# Watchlist 
+
+## February 23, 2017
 1. HOLX
 2. BKU
 3. GRA
@@ -8,7 +10,7 @@
 
 
 
-# February 26, 2017
+## February 26, 2017
 1. TRIP
 2. RRC
 3. UPS
@@ -24,7 +26,7 @@
 
 
 
-# Febraury 27, 2017
+## Febraury 27, 2017
 1. AHT
 2. CCL
 3. FSLR
