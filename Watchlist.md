@@ -38,4 +38,4 @@
 1. BIVV
 2. **AMD** 
 3. **AAPL** (buy - support touch, will bound back)
-4. 
+4. CLNS (triple bottom)
