@@ -39,3 +39,9 @@
 2. **AMD** 
 3. **AAPL** (buy - support touch, will bound back)
 4. CLNS (triple bottom)
+
+
+## March 13, 2017 
+1. INTC (watch for march $38 breakout)
+2. BABA ($105R break, check tmrw)
+3. IBN (check for $8.80R break)
