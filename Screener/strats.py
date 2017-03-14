@@ -29,6 +29,7 @@ from data import HistoricCSVDataHandler
 from execution import SimulatedExecutionHandler
 from create_lagged_series import create_lagged_series
 
+
 class SPYDailyForecastStrategy(Strategy):
     """
     Use a Quadratic Discriminant (sklear) Analyser to create an S&P500 forecast
@@ -42,9 +43,9 @@ class SPYDailyForecastStrategy(Strategy):
         self.events = events
         self.datetime_now = dt.datetime.utcnow()
 
-        self.model_start_date = dt.datetime(2001,1,10)
-        self.model_end_date = dt.datetime(2005,1,10)
-        self.model_start_test_date = dt.datetime(2005,1,1)
+        self.model_start_date = dt.datetime(2001, 1, 10)
+        self.model_end_date = dt.datetime(2005, 1, 10)
+        self.model_start_test_date = dt.datetime(2005, 1, 1)
 
         self.long_market = False
         self.short_market = False
@@ -61,7 +62,7 @@ class SPYDailyForecastStrategy(Strategy):
 
         # Use the prior two days of returns as predictor values, with direction
         # as the response
-        X = snpret[["LAG1","Lag2"]]
+        X = snpret[["LAG1", "Lag2"]]
         y = snpret['Direction']
 
         # Create training and test sets
@@ -71,7 +72,7 @@ class SPYDailyForecastStrategy(Strategy):
         y_train = y[y.index < start_test]
         y_test = y[y.index >= start_test]
 
-        model = QDA() # Can easily switch to other ML techniques here
+        model = QDA()  # Can easily switch to other ML techniques here
         model.fit(X_train, y_train)
         return model
 
@@ -84,14 +85,14 @@ class SPYDailyForecastStrategy(Strategy):
 
         if event.type == 'Market':
             self.bar_index += 1
-            if self.bar_index >5:
+            if self.bar_index > 5:
                 lags = self.bars.get_latest_bars_value(
                     self.symbol_list[0], "returns", N=3
                 )
                 pred_series = pd.Series(
                     {
-                        'Lag1': lags[1]*100.0,
-                        'Lag2': lags[2]*100.0
+                        'Lag1': lags[1] * 100.0,
+                        'Lag2': lags[2] * 100.0
                     }
                 )
                 pred = self.model.predict(pred_series)
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     symbol_list = ['SPY']
     initial_capital = 100000.0
     heartbeat = 0.0
-    start_date = dt.datetime(3006,1,3)
+    start_date = dt.datetime(3006, 1, 3)
 
     backtest = Backtest(
         csv_dir, symbol_list, initial_capital, heartbeat, start_date,
@@ -148,6 +149,7 @@ from backtest import Backtest
 from data import HistoricCSVDataHandler
 from execution import SimulatedExecutionHandler
 from portfolio import Portfolio
+
 
 class MovingAverageCrossStrategy(Strategy):
     """
@@ -203,7 +205,7 @@ class MovingAverageCrossStrategy(Strategy):
             for s in self.symbol_list:
                 bars = self.bars.get_latest_bars_values(
                     s, "adj_close", N=self.long_window
-                    )
+                )
                 bar_date = self.bars.get_latest_bar_datetime(s)
                 if bars is not None and bars != []:
                     short_sma = np.mean(bars[-self.short_window:])
@@ -226,9 +228,9 @@ class MovingAverageCrossStrategy(Strategy):
                         self.events.put(signal)
                         self.bought[s] = 'OUT'
 
+
 if __name__ == "__main__":
-    csv_dir = 'ENTER PATH IN UBUNTU OS HERE (developing on Mac os partition at
-    the moment'
+    csv_dir = 'ENTER PATH IN UBUNTU OS HERE (developing on Mac os partition at the moment)'
     symbo_list = ['AAPL']
     initial_capital = 100000.0
     heartbeat = 0.0
@@ -264,5 +266,3 @@ if __name__ == "__main__":
 #
 # NOTE: a higher frequency datahandler and portfolio program must be created
 # for this strategy to function
-
-form __fu

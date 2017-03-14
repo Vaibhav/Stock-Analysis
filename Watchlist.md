@@ -45,3 +45,29 @@
 1. INTC (watch for march $38 breakout)
 2. BABA ($105R break, check tmrw)
 3. IBN (check for $8.80R break)
+
+## March 14, 2017
+1. UCTT
+2. MU
+3. COHU
+4. CSIQ
+5. GNW
+6. NOC
+7. **TREE**
+8. MASI
+
+### Daily Ticker 
+1. QRVO
+2. FATE
+3. NVLN
+4. RRGB
+
+### MACD Cross
+
+1. XOG
+2. PENN
+3. RGC
+4. EDIT
+5. ZTO
+6. BL
+
