@@ -99,7 +99,10 @@ ENV/
 
 # non commit
 trendy.py
+test.py
+strats.py
 *.xls
 *.xlsx
 *.csv
-
+*.txt
+*.json
