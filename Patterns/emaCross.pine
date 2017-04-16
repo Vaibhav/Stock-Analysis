@@ -11,12 +11,12 @@ istradingsession = not USE_TRADESESSION ? false : not na(time('1', trade_session
 bgcolor(istradingsession?gray:na)
 trade_size = input(title='Trade Size:', type=float, defval=100.00)
 
-tp = input(title='Take profit in pips:', type=float, defval=55.0) * (syminfo.mintick*10)
-sl = input(title='Stop loss in pips:', type=float, defval=22.0) * (syminfo.mintick*10)
+tp = input(title='Take profit in pips:', type=float, defval=50.0) * (syminfo.mintick*10)
+sl = input(title='Stop loss in pips:', type=float, defval=20.0) * (syminfo.mintick*10)
 
 ema1 = input(title='EMA length:', type=integer, defval=4)
 ema2 = input(title='Double EMA length:', type=integer, defval=8)
-price = input(title='Price source:', type=source, defval=open)
+price = input(title='Price source:', type=source, defval=close)
 
 //  ||--- NO LAG EMA, Credit LazyBear:  ---||
 f_LB_zlema(_src, _length)=>
@@ -29,8 +29,8 @@ f_LB_zlema(_src, _length)=>
 shortEMA = f_LB_zlema(price, ema1)
 longEMA = f_LB_zlema(price, ema2)
 
-plot(title='M0', series=shortEMA, color=red)
-plot(title='M1', series=longEMA, color=green)
+plot(title='Short EMA', series=shortEMA, color=red)
+plot(title='Long EMA', series=longEMA, color=green)
 
 isnewbuy = change(strategy.position_size)>0 and change(strategy.opentrades)>0
 isnewsell = change(strategy.position_size)<0 and change(strategy.opentrades)>0
@@ -38,8 +38,8 @@ isnewsell = change(strategy.position_size)<0 and change(strategy.opentrades)>0
 buy_entry_price = isnewbuy ? price : buy_entry_price[1]
 sell_entry_price = isnewsell ? price : sell_entry_price[1]
 
-plot(title='BE', series=buy_entry_price, style=circles, color=strategy.position_size <= 0 ? na : aqua)
-plot(title='SE', series=sell_entry_price, style=circles, color=strategy.position_size >= 0 ? na : aqua)
+plot(title='Buy Entry', series=buy_entry_price, style=circles, color=strategy.position_size <= 0 ? na : aqua)
+plot(title='Sell Entry', series=sell_entry_price, style=circles, color=strategy.position_size >= 0 ? na : aqua)
 
 buy_appex = na(buy_appex[1]) ? price : isnewbuy ? high : high >= buy_appex[1] ? high : buy_appex[1]
 sell_appex = na(sell_appex[1]) ? price : isnewsell ? low : low <= sell_appex[1] ? low : sell_appex[1]
@@ -50,20 +50,26 @@ plot(title='SA', series=sell_appex, style=circles, color=strategy.position_size 
 buy_ts = buy_appex - sl
 sell_ts = sell_appex + sl
 
-plot(title='Bts', series=buy_ts, style=circles, color=strategy.position_size <= 0 ? na : red)
-plot(title='Sts', series=sell_ts, style=circles, color=strategy.position_size >= 0 ? na : red)
+plot(title='Buy TrailStop', series=buy_ts, style=circles, color=strategy.position_size <= 0 ? na : red)
+plot(title='Sell TrailStop', series=sell_ts, style=circles, color=strategy.position_size >= 0 ? na : red)
+
 
 buy_cond1 = crossover(shortEMA, longEMA) and (USE_TRADESESSION ? istradingsession : true)
 buy_cond0 = crossover(price, shortEMA) and shortEMA > longEMA and (USE_TRADESESSION ? istradingsession : true)
+
 buy_entry = buy_cond1 or buy_cond0
-buy_close = (not USE_TRAILINGSTOP ? low <= buy_entry_price - sl: low <= buy_ts) or high>=buy_entry_price+tp//high>=last_traded_price + tp or low<=last_traded_price - sl //high >= hh or 
+buy_close = (not USE_TRAILINGSTOP ? low <= buy_entry_price - sl: low <= buy_ts) or high>=buy_entry_price+tp 
+
 
 sell_cond1 = crossunder(shortEMA, longEMA) and (USE_TRADESESSION ? istradingsession : true)
 sell_cond0 = crossunder(price, shortEMA) and shortEMA < longEMA and (USE_TRADESESSION ? istradingsession : true)
+
 sell_entry = sell_cond1 or sell_cond0
-sell_close = (not USE_TRAILINGSTOP ? high >= sell_entry_price + sl : high >= sell_ts) or low<=sell_entry_price-tp//low<=last_traded_price - tp or high>=last_traded_price + sl //low <= ll or 
+sell_close = (not USE_TRAILINGSTOP ? high >= sell_entry_price + sl : high >= sell_ts) or low<=sell_entry_price-tp 
+
 
 strategy.entry('buy', long=strategy.long, qty=trade_size, comment='buy', when=buy_entry)
 strategy.close('buy', when=buy_close)
+
 strategy.entry('sell', long=strategy.short, qty=trade_size, comment='sell', when=sell_entry)
 strategy.close('sell', when=sell_close)
