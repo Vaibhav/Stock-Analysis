@@ -38,22 +38,23 @@ def get_ma(stock):
 	try:
 		data = stock.get_historical(date10, theDate)
 		prices_50 = stock.get_50day_moving_avg()
+	
+		count = 0
+		for theData in data:
+			if count < 10:
+				count = count + 1
+				prices_10.append(float(theData['Adj_Close']))
+			else:
+				continue
+		count = 0
+		for theData in data:
+			if count < 20:
+				count = count + 1
+				prices_20.append(float(theData['Adj_Close']))
+			else:
+				continue
 	except:
 		return 0,0,0
-	count = 0
-	for theData in data:
-		if count < 10:
-			count = count + 1
-			prices_10.append(float(theData['Adj_Close']))
-		else:
-			continue
-	count = 0
-	for theData in data:
-		if count < 20:
-			count = count + 1
-			prices_20.append(float(theData['Adj_Close']))
-		else:
-			continue
 	print prices_50
 	return prices_10, prices_20, prices_50
 	
