@@ -40,10 +40,25 @@ This barely makes a difference to the naked eye. The two graphs are very similar
 
 #### New Screenshots 
 
+#### AEIS
 ![AEIS February 20](AEIS-feb20.png)
-
+#### FB
 ![Facebook February 20](FB-feb20.png)
 
+
+#### Trends
+
+Working on a trend lines creator. 
+
+![trendy](figure_1.png)
+
+![trendy](figure_1-1.png)
+
+![trendy](figure_1-2.png)
+
+![trendy](figure_1-3.png)
+
+![trendy](figure_1-4.png)
 
 ## Version
 
