@@ -2,8 +2,6 @@
 # JDST
 
 ## Observable Correlation 
-For the 30 minute candles: 
-
 
 1. If DXY is bullish, JDST is bullish 
     
