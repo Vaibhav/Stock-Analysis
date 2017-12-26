@@ -2,7 +2,7 @@ import numpy as np
 import pandas.io.data as pd 
 from matplotlib.pyplot import plot, grid, show
 
-def trendGen(xDat, window=1.0/3.0, charts=True): 
+def trendGen(xDat, window=1.0/3.0, needPlot=True): 
     
     x = np.array(xDat)
     xLen = len(x)
@@ -38,6 +38,17 @@ def trendGen(xDat, window=1.0/3.0, charts=True):
     maxline  = np.linspace(amax, bmax, xLen)
     minline  = np.linspace(amin, bmin, xLen)
 
-    
+    trends = np.transpose(np.array((x, maxline, minline)))
+
+    trends = pd.DataFrame(trends, index=np.arange(0, len(x)),
+                          columns=['Data', 'Resistance', 'Support'])
+
+    if needPlot:
+        plot(trends)
+        show()
+
+    return trends, slopeMax, slopeMin
+
+
 
 
