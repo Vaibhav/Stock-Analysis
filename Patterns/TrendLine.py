@@ -1,6 +1,8 @@
 import numpy as np
-import pandas.io.data as pd 
+#import pandas.io.data as pd
 from matplotlib.pyplot import plot, grid, show
+from pandas_datareader import data, wb
+import pandas as pd
 
 def trendGen(xDat, window=1.0/3.0, needPlot=True): 
     
@@ -10,8 +12,8 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
     window = int(window)
 
     # find index of min and max
-    absMax = np.where(x == max(x)[0][0]) 
-    absMin = np.where(x == min(x)[0][0])
+    absMax = np.where(x == max(x))[0][0] 
+    absMin = np.where(x == min(x))[0][0]
 
     if absMax + window > xLen:
         xmax = max(x[0:(absMax - window)])
@@ -50,5 +52,6 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
     return trends, slopeMax, slopeMin
 
 
+dat = data.DataReader("AEIS", "yahoo")['Adj Close']
 
-
+trendGen(dat, window = 1.0/3)
