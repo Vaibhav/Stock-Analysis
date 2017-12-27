@@ -52,6 +52,6 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
     return trends, slopeMax, slopeMin
 
 
-dat = data.DataReader("AEIS", "yahoo")['Adj Close']
+dat = data.DataReader("BABA", "yahoo")['Adj Close']
 
 trendGen(dat, window = 1.0/3)
