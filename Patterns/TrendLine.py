@@ -1,5 +1,6 @@
+## Requires Python 3
+
 import numpy as np
-#import pandas.io.data as pd
 from matplotlib.pyplot import plot, grid, show
 from pandas_datareader import data, wb
 import pandas as pd
@@ -55,3 +56,38 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
 dat = data.DataReader("BABA", "yahoo")['Adj Close']
 
 trendGen(dat, window = 1.0/3)
+
+
+def findTops(x, window=1.0/3, charts=True):
+    
+    x = np.array(x)
+    xLen = len(x)
+
+    if window < 1:
+        window = int(window * xLen)
+    
+    sigs = np.zeros(xLen, dtype=float)
+
+    i = window
+    
+    while i != xLen:
+        if x[i] > max(x[i-window:i]): sigs[i] = 1
+        elif x[i] < min(x[i-window:i]): sigs[i] = -1
+        i += 1
+
+    xmin = np.where(sigs == -1.0)[0]
+    xmax = np.where(sigs == 1.0)[0]
+    
+    ymin = x[xmin]
+    ymax = x[xmax]
+    
+    if charts is True:
+        plot(x)
+        plot(xmin, ymin, 'ro')
+        plot(xmax, ymax, 'go')
+        show()
+
+    return sigs
+
+
+findTop(dat, window = 1.0/3)
