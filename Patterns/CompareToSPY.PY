@@ -2,23 +2,30 @@
 ###
 ## Vaibhav Khaitan
 ## February 2017
-## Module compares the S&P to the given stock 
+## Module compares the S&P to the given stock
 ## and tries to find any correlation they have.
 ###
 ############################
 
-# Starting with 2009 
-# Do not want to include the market crash in 2008 since it is outlier data 
+# Starting with 2009
+# Do not want to include the market crash in 2008 since it is outlier data
 # May add a 2008 crash handler in the future
 
 # Date	Open	High	Low	Close	Volume	Adj Close
 # 2009-01-02
-
 from datetime import datetime, timedelta
 import sys
 import time
 import csv
 from yahoo_finance import Share
+
+def print_header_section(heading):
+	print("=====================================================================")
+	print("==========================" + heading + "======================================")
+	print("=====================================================================")
+
+def print_footer_section():
+	print("=====================================================================")
 
 version = sys.version_info[0]
 
@@ -39,8 +46,8 @@ counter2 = 0
 SPYdata = []
 givenStock = []
 
-# a = index of list in list of lists 
-# b = index of element in the list 
+# a = index of list in list of lists
+# b = index of element in the list
 # [a, b]
 def findItem(theList, item):
    return [(ind, theList[ind].index(item)) for ind in range(len(theList)) if item in theList[ind]]
@@ -100,8 +107,8 @@ def getStockData(theTicker):
 	return givenStock
 
 
-	
-# takes in datetime 
+
+# takes in datetime
 def dayUpDown(theDate, data):
 	today = theDate.strftime("%Y-%m-%d")
 	ind = findItem(data, today)
@@ -111,7 +118,7 @@ def dayUpDown(theDate, data):
 	point = data[indx]
 	open = point[1]
 	close = point[5]
-	
+
 	if close <	open:
 		return 1
 	elif close == open:
@@ -119,8 +126,8 @@ def dayUpDown(theDate, data):
 	else:
 		return -1
 
-	
-# takes in datetime 
+
+# takes in datetime
 def closeUpDown(theDate, data):
 	today = theDate.strftime("%Y-%m-%d")
 	tmp = theDate - timedelta(days=1);
@@ -142,8 +149,8 @@ def closeUpDown(theDate, data):
 	else:
 		return -1
 
-	
-# takes in datetime 
+
+# takes in datetime
 def openUpDown(theDate, data):
 	today = theDate.strftime("%Y-%m-%d")
 	tmp = theDate - timedelta(days=1);
@@ -164,9 +171,9 @@ def openUpDown(theDate, data):
 		return 0
 	else:
 		return -1
-	
 
-	
+
+
 
 def AskUser():
 	global ticker, startDate
@@ -182,15 +189,15 @@ def AskUser():
 		# startDate = datetime.strptime("2009-01-02", "%Y-%m-%d")
 		startDate = start = "2009-01-02"
 	return ticker, start
-	
-	
-	
+
+
+
 if __name__ == '__main__':
 	SPYdata = getSP500()
 	theTicker, start = AskUser()
 	givenStock = getStockData(theTicker)
 	givenStock.reverse()
-	
+
 length = len(SPYdata)
 print(length)
 length = len(givenStock)
@@ -222,14 +229,14 @@ for i in SPYdata:
 		dayDown += 1
 	else:
 		dayNeutral += 1
-	
+
 	if k == 1:
 		closeUp += 1
 	elif k == -1:
 		closeDown += 1
 	else:
 		closeNeutral += 1
-		
+
 	if l == 1:
 		openUp += 1
 	elif l == -1:
@@ -239,9 +246,7 @@ for i in SPYdata:
 
 "{0:.2f}".format(13.949999999999999)
 
-print("=====================================================================")
-print("==========================" + " S&P 500 " + "======================================")
-print("=====================================================================") 
+print_header_section(" S&P 500 ")
 print("Up Days: " + str(dayUp) + "   " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
 print("Down Days: " + str(dayDown) + "   " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
 print("Neutral Days: " + str(dayNeutral) + "   " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
@@ -255,7 +260,7 @@ print("Neutral Open Days: " + str(openNeutral) + "    " + "{0:.2f}".format(100 *
 print("Up Close Days: " + str(closeUp) + "    " + "{0:.2f}".format(100 * float(closeUp)/float(length)) + "%")
 print("Down Close Days: " + str(closeDown) + "    " + "{0:.2f}".format(100 * float(closeDown)/float(length)) + "%")
 print("Neutral Close Days: " + str(closeNeutral) + "   " + "{0:.2f}".format(100 * float(closeNeutral-1)/float(length)) + "%")
-print("=====================================================================")
+print_footer_section()
 
 dayUp = 0
 dayDown = 0
@@ -270,7 +275,7 @@ closeDown = 0
 closeNeutral = 0
 j  = k = l = 0
 test = 0
-		
+
 for n in givenStock:
 	if test == 0:
 		test += 1
@@ -286,14 +291,14 @@ for n in givenStock:
 		dayDown += 1
 	else:
 		dayNeutral += 1
-	
+
 	if k == 1:
 		closeUp += 1
 	elif k == -1:
 		closeDown += 1
 	else:
 		closeNeutral += 1
-		
+
 	if l == 1:
 		openUp += 1
 	elif l == -1:
@@ -301,10 +306,8 @@ for n in givenStock:
 	else:
 		openNeutral += 1
 
-		
-print("=====================================================================")		
-print("==========================" + theTicker + "======================================")
-print("=====================================================================") 
+
+print_header_section(theTicker)
 print("Up Days: " + str(dayUp) + "    " + "{0:.2f}".format(100 * float(dayUp)/float(length)) + "%")
 print("Down Days: " + str(dayDown) + "    " + "{0:.2f}".format(100 * float(dayDown)/float(length)) + "%")
 print("Neutral Days: " + str(dayNeutral) + "    " + "{0:.2f}".format(100 * float(dayNeutral)/float(length)) + "%")
@@ -318,4 +321,4 @@ print("Neutral Open Days: " + str(openNeutral) + "    " + "{0:.2f}".format(100 *
 print("Up Close Days: " + str(closeUp) + "    " + "{0:.2f}".format(100 * float(closeUp)/float(length)) + "%")
 print("Down Close Days: " + str(closeDown) + "    " + "{0:.2f}".format(100 * float(closeDown)/float(length)) + "%")
 print("Neutral Close Days: " + str(closeNeutral) + "    " + "{0:.2f}".format(100 * float(closeNeutral-1)/float(length)) + "%")
-print("=====================================================================")
+print_footer_section()
