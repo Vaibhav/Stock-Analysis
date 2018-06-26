@@ -9,13 +9,13 @@ months =  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augu
 
 #1346518700
 
-print "Make sure scraped data file is in the same directory as this script"
+print("Make sure scraped data file is in the same directory as this script")
 
 filename = raw_input('\nEnter name of file with scraped data: \n')
 nos = raw_input('Enter name of stock: \n')
 
 if filename.endswith('.csv'):
-    print '\n'
+    print('\n')
 else:
     filename = filename + '.csv'
 

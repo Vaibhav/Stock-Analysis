@@ -31,7 +31,7 @@ plt.subplots_adjust(bottom=0.13)
 plt.subplots_adjust(top=0.92)
 plt.subplots_adjust(left=0.07)
 plt.subplots_adjust(right=0.96)
-plt.xticks([w*20 for w in range(32)], 
+plt.xticks([w*20 for w in range(32)],
   ['Month %i'%w for w in range(32)])
 plt.xticks(rotation=90)
 plt.autoscale(enable=True, axis='both')
@@ -87,9 +87,9 @@ stocks = ['ABT', 'ABBV', 'ACN', 'ACE', 'ADBE', 'ADT', 'AAP', 'AES', 'AET', 'AFL'
           'WY', 'WHR', 'WFM', 'WMB',
           'WEC', 'WYN', 'WYNN', 'XEL', 'XRX', 'XLNX', 'XL', 'XYL', 'YHOO', 'YUM', 'ZBH', 'ZION', 'ZTS']
 
-# print len(stocks)
+# print(len(stocks))
 
 for stock in stocks:
-    print stock + ", "
+    print(stock + ", ")
 
 

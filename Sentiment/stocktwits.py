@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib.request, urllib.error, urllib.parse
+import urllib
 import json
 import datetime
 
@@ -70,7 +70,7 @@ FILENAME = "stocktwits.json"
 if __name__ == "__main__":
 
     # Optional file output
-    print("Do you want to specify name of output file?")
+    print("Do you want to specify name of output file? Type y or Y for yes.")
     x = input()
 
     # Execute this code if option is taken
