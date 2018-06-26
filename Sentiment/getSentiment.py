@@ -1,5 +1,6 @@
 import os
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
 import json
 from pprint import pprint
 
@@ -17,6 +18,8 @@ text = "shares jump as shipments more than double winning"
 print(sentimentScore(text))
 '''
 
+nltk.download('vader_lexicon')
+
 # --- examples -------
 sentences = ["VADER is smart, handsome, and funny.",      # positive sentence example
             "VADER is not smart, handsome, nor funny.",   # negation sentence example
@@ -33,7 +36,7 @@ sentences = ["VADER is smart, handsome, and funny.",      # positive sentence ex
             "Today SUX!",                                 # negative slang with capitalization emphasis
             "Today only kinda sux! But I'll get by, lol"  # mixed sentiment example with slang and constrastive conjunction "but"
 			]
-			 
+
 examples = [
 "$AAPL Apple Dividend Stock Analysis  http://dividendvaluebuilder.com/apple-aapl-dividend-stock-analysis/ #dividend #yield #tech #cashcow #growth #DVB #AAAMP",
 "Unusual Options Activity - 02.24.2017 - $AAPL $NKE $PBR $JCP $FDX $MBLY $LUV $CMCSA $MTG $ATVI",
@@ -67,7 +70,7 @@ examples = [
 ]
 
 bullish = 0
-bearish = 0			 
+bearish = 0
 
 def read_tickers():
     print("Reading tickers from \"tickers.txt\":")
@@ -91,14 +94,14 @@ def sentimentScore(sentences):
 		print("vs: " + str(vs))
 		results.append(vs)
 	return results
-		
+
 # sentimentScore(examples)
 
-with open('feb26.json') as data_file:    
+with open('feb26.json') as data_file:
     data = json.load(data_file)
 
 list1 = []
-	
+
 for i in data['AAPL']:
 	list1.append(i['body'])
 	# print(type(i['entities']['sentiment']))
@@ -117,9 +120,9 @@ for j in tmp:
 		pprint(j['compound'])
 		sum += j['compound']
 		count += 1.0
-		
+
 print("avg: " + str(sum/count))
 print(bullish)
 print(bearish)
-			
+
 
