@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # get list of ticker codes
     codes = read_tickers()
 
-    print(get_twits('AAPL'))
+    # print(get_twits('AAPL'))
     # for each ticker code get the data
     twitdata = get_twits_list(codes)
     # remove the data if older than X days, useless
