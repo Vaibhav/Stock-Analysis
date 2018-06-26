@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import urllib.request, urllib.error, urllib.parse
+import requests
 import json
 import datetime
 from bs4 import BeautifulSoup
@@ -13,9 +13,8 @@ names = ["AAPL", "MMM", "AXP", "T", "BA", "CAT", "CVX", "CSCO", "KO", "DIS", "DD
 
 def get_headlines(ticker):
     URL = "http://www.finviz.com/quote.ashx?t=" + ticker
-    connection = urllib.request.urlopen(URL)
+    connection = requests.get(URL).text.encode("utf-8").decode('ascii', 'ignore')
     soup = BeautifulSoup(connection, "html.parser")
-    connection.close()
     print("Downloaded data")
     return soup.find(id="news-table").findAll("tr")
 
@@ -71,13 +70,11 @@ FILENAME = "headlines.json"
 if __name__ == "__main__":
 
     # Optional file output
-    print("Do you want to specify name of output file?")
-    x = input()
+    x = input("Do you want to specify name of output file?")
 
     # Execute this code if option is taken
     if x.startswith("y") or x.startswith("Y"):
-        print("What is file name?")
-        filename = input()
+        filename = input("What is file name?")
         if not (filename.endswith(".json")):
             filename = filename + ".json"
         FILENAME = filename
