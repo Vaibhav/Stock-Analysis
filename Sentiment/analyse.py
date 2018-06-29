@@ -61,7 +61,7 @@ def SaSentimentRSS(symbol):
                         # not writing articles with zero sentiments
                         # collect a string to be written to file
                         if s['compound'] != 0:
-                            # print ArticleTitle
+                            # print(ArticleTitle)
                             toBeWrittenToFile += (
                                 str(symbol) + ',' + str(s['neg']) + ',' + str(s['neu']) + ',' + str(s['pos']) + ',' + str(
                                     s['compound']) + ',' + ArticleTitle + ',' + str(link) + '\n')
