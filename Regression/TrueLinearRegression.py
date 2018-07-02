@@ -7,39 +7,42 @@ import matplotlib.pyplot as plt
 import pylab as pl
 import csv
 
+
 def get_data(f, close_prices, dates):
 
     if not(f.endswith('.csv')):
         f = f + '.csv'
 
     with open(f, 'r') as file:
-        the_data = csv.reader(file);
-        #Skip the row with headers
+        the_data = csv.reader(file)
+        # Skip the row with headers
         the_data.next()
 
         for row in the_data:
-            #convert close price to float
+            # convert close price to float
             x = float(row[4])
-            #convert close price to a price (2 decimal points)
+            # convert close price to a price (2 decimal points)
             close_prices.append(float("{0:.2f}".format(x)))
             dates.append(int(row[0].split('/')[0]))
-            
+
     length_of_dates = len(dates)
     days = []
-    days.extend(range(1, length_of_dates+1))
-    
+    days.extend(range(1, length_of_dates + 1))
+
     return days, close_prices
-            
+
+
 def linear_regression(x, y):
     length_of_x = len(x)
     sum_of_x = sum(x)
     sum_of_y = sum(y)
 
     sum_of_x_squared = sum(map(lambda m: m * m, x))
-    
-    sum_of_products = sum([x[i] * y[i] for i in range(0,length_of_x)])
 
-    m = (sum_of_products - (sum_of_x * sum_of_y) / length_of_x) / (sum_of_x_squared - ((sum_of_x ** 2) / length_of_x))
+    sum_of_products = sum([x[i] * y[i] for i in range(0, length_of_x)])
+
+    m = (sum_of_products - (sum_of_x * sum_of_y) / length_of_x) / \
+        (sum_of_x_squared - ((sum_of_x ** 2) / length_of_x))
     b = (sum_of_y - m * sum_of_x) / length_of_x
     tmp = [m, b]
     return tmp
@@ -47,12 +50,13 @@ def linear_regression(x, y):
 
 close_prices = []
 dates = []
-f = raw_input('Enter filename: \n')
-x,y = get_data(f, close_prices, dates)
+f = input('Enter filename: \n')
+x, y = get_data(f, close_prices, dates)
 
-rev = raw_input('Is the newest price first? (y/n)')
-if rev.startswith('y'): y.reverse();
-temp = linear_regression(x,y)
+rev = input('Is the newest price first? (y/n)')
+if rev.startswith('y'):
+    y.reverse()
+temp = linear_regression(x, y)
 
 maxx = max(x)
 maxy = max(y)
@@ -65,11 +69,11 @@ b = float(temp[1])
 # Predict next day price based on linear line
 # y = mx + b
 
-print ((m * (maxx + 1)) + b)
+print((m * (maxx + 1)) + b)
 
-pl.figure(figsize=(7,5), dpi=120)
-pl.scatter(x, y, color = 'black', label = 'Close Prices')
-pl.plot(x,m*np.asarray(x) + b, color = 'red', linewidth =  4, label = "Linear Regression Model")
+pl.figure(figsize=(7, 5), dpi=120)
+pl.scatter(x, y, color='black', label='Close Prices')
+pl.plot(x, m * np.asarray(x) + b, color='red', linewidth=4, label="Linear Regression Model")
 pl.xlabel('Day')
 pl.ylabel('Close Price')
 pl.title('Linear Regression')

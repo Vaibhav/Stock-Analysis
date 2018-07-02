@@ -132,18 +132,18 @@ def remove_dup(symbols_list, now, the_year, is_today):
 
 
 # Ask user to input ticker
-the_stock = raw_input('\nEnter Stock Ticker Code: \n')
+the_stock = input('\nEnter Stock Ticker Code: \n')
 the_stock = the_stock.upper().strip()
 symbols_list = [the_stock]
 
 # Asks user to input starting year
-year = raw_input('Enter starting year: \n')
+year = input('Enter starting year: \n')
 the_year = year.strip()
 year = year.strip()
 
 # Ask user if they want ascending order or descending order
 print 'Enter 1 if you want the oldest prices at the top. \n'
-asc = raw_input('Enter 0 if you want the most recent prices at the top: \n')
+asc = input('Enter 0 if you want the most recent prices at the top: \n')
 asc = int(asc)
 
 tempo = get_data(symbols_list, year, asc)
