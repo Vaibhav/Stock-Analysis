@@ -4,15 +4,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-months =  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] * 5
+months = ['January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'] * 5
 
 
-#1346518700
+# 1346518700
 
 print("Make sure scraped data file is in the same directory as this script")
 
-filename = raw_input('\nEnter name of file with scraped data: \n')
-nos = raw_input('Enter name of stock: \n')
+filename = input('\nEnter name of file with scraped data: \n')
+nos = input('Enter name of stock: \n')
 
 if filename.endswith('.csv'):
     print('\n')
@@ -40,8 +41,8 @@ plt.subplots_adjust(top=0.92)
 plt.subplots_adjust(left=0.07)
 plt.subplots_adjust(right=0.96)
 
-plt.xticks([w*20 for w in range(50)],
-  [months[w] for w in range(50)])
+plt.xticks([w * 20 for w in range(50)],
+           [months[w] for w in range(50)])
 plt.xticks(rotation=90)
 plt.autoscale(enable=True, axis='both')
 plt.grid()
