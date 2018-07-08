@@ -43,10 +43,10 @@ def read_tickers():
     names = []
     # read tickers from tickers.txt
     for line in f:
-		line = line.strip('\n')
-		line = line.upper()
-		line = line.strip('\t')
-		names.append(line)
+        line = line.strip('\n')
+        line = line.upper()
+        line = line.strip('\t')
+        names.append(line)
     print names
     return names
 
@@ -70,13 +70,11 @@ FILENAME = "stocktwits.json"
 if __name__ == "__main__":
 
     # Optional file output
-    print "Do you want to specify name of file?"
-    x = raw_input()
+    x = input("Do you want to specify name of file?")
 
     # Execute this code if option is taken
     if x.startswith("y") or x.startswith("Y"):
-        print "What is file name?"
-        filename = raw_input()
+        filename = input("What is file name?")
         if not (filename.endswith(".json")):
             filename = filename + ".json"
         FILENAME = filename
