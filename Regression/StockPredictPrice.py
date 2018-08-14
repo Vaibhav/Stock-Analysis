@@ -11,23 +11,23 @@ import matplotlib.pyplot as plt
 close_prices = []
 dates = []
 
-f = raw_input('Enter filename: \n')
+f = input('Enter filename: \n')
 
 if not(f.endswith('.csv')):
-	f = f + '.csv'
+    f = f + '.csv'
 
 with open(f, 'r') as file:
-	the_data = csv.reader(file);
-	the_data.next()
+    the_data = csv.reader(file)
+    the_data.next()
 
-	for row in the_data:
-		print row
-		x = float(row[4])
-		close_prices.append(float("{0:.2f}".format(x)))
-		dates.append(int(row[0].split('/')[0]))
+    for row in the_data:
+        print row
+        x = float(row[4])
+        close_prices.append(float("{0:.2f}".format(x)))
+        dates.append(int(row[0].split('/')[0]))
 
 # convert lists to numpy arrays
-length_of_dates = len(dates) + 1;
+length_of_dates = len(dates) + 1
 day = []
 day.extend(range(1, length_of_dates))
 
@@ -58,13 +58,13 @@ maxpr = max(close_prices)
 maxdt = predict_num
 mindt = 1
 
-#Draw black dots representing prices
-plt.figure(figsize=(15,15), dpi=240)
-plt.scatter(days_arr, prices_arr, color = 'black', label = 'Close Prices')
+# Draw black dots representing prices
+plt.figure(figsize=(15, 15), dpi=240)
+plt.scatter(days_arr, prices_arr, color='black', label='Close Prices')
 
-plt.plot(days_arr, svr_lin.predict(days_arr), color = 'blue', linewidth = 3, label = 'Linear Model')
-plt.plot(days_arr, svr_poly.predict(days_arr), color = 'green', linewidth = 3, label = 'Polynomial Model')
-plt.plot(days_arr, svr_rbf.predict(days_arr), color = 'red', linewidth = 4, label = 'RBF Model')
+plt.plot(days_arr, svr_lin.predict(days_arr), color='blue', linewidth=3, label='Linear Model')
+plt.plot(days_arr, svr_poly.predict(days_arr), color='green', linewidth=3, label='Polynomial Model')
+plt.plot(days_arr, svr_rbf.predict(days_arr), color='red', linewidth=4, label='RBF Model')
 
 plt.xlabel('Day')
 plt.ylabel('Close Prices')
@@ -78,4 +78,4 @@ plt.subplots_adjust(right=0.96)
 plt.legend()
 plt.show()
 
-#742.95
+# 742.95

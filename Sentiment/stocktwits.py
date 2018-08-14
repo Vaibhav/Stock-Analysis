@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib.request, urllib.error, urllib.parse
+import requests
 import json
 import datetime
 
@@ -14,10 +14,8 @@ def write_to_file(nameOfFile, data):
 # get the data using StockTwits API
 def get_twits(ticker):
     url = "https://api.stocktwits.com/api/2/streams/symbol/{0}.json".format(ticker)
-    connection = urllib.request.urlopen(url)
-    data = connection.read()
-    connection.close()
-    return json.loads(data)
+    response = requests.get(url).json()
+    return response
 
 
 # loops through to get data for each ticker in the tickers list
@@ -69,20 +67,21 @@ FILENAME = "stocktwits.json"
 
 if __name__ == "__main__":
 
-    # Optional file output
-    print("Do you want to specify name of output file?")
-    x = input()
+    # Optional file output - Make sure you are using Python 3!
+    # To check, import sys and then print(sys.version)
+    x = input("Do you want to specify name of output file? Type y or Y for yes. \n").lower()
 
     # Execute this code if option is taken
     if x.startswith("y") or x.startswith("Y"):
-        print("What is file name?")
-        filename = input()
+        filename = input("What is file name? \n")
         if not (filename.endswith(".json")):
             filename = filename + ".json"
         FILENAME = filename
 
     # get list of ticker codes
     codes = read_tickers()
+
+    # print(get_twits('AAPL'))
     # for each ticker code get the data
     twitdata = get_twits_list(codes)
     # remove the data if older than X days, useless
