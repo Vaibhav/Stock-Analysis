@@ -106,3 +106,4 @@ strats.py
 *.csv
 *.txt
 *.json
+.DS_Store
