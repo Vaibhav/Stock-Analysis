@@ -4,6 +4,7 @@ import numpy as np
 from matplotlib.pyplot import plot, grid, show
 from pandas_datareader import data, wb
 import pandas as pd
+from datetime import datetime, timedelta
 
 def trendGen(xDat, window=1.0/3.0, needPlot=True):
 
@@ -48,12 +49,15 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
 
     if needPlot:
         plot(trends)
+        grid()
         show()
 
     return trends, slopeMax, slopeMin
 
-
-dat = data.DataReader("BABA", "yahoo")['Adj Close']
+today = datetime.now()
+d = timedelta(days=365)
+start = today - d
+dat = data.DataReader("BABA", "iex", start, today)['close']
 
 trendGen(dat, window = 1.0/3)
 
@@ -90,4 +94,4 @@ def findTops(x, window=1.0/3, charts=True):
     return sigs
 
 
-findTop(dat, window = 1.0/3)
+findTops(dat, window = 1.0/3)
