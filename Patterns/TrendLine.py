@@ -54,13 +54,6 @@ def trendGen(xDat, window=1.0/3.0, needPlot=True):
 
     return trends, slopeMax, slopeMin
 
-today = datetime.now()
-d = timedelta(days=365)
-start = today - d
-dat = data.DataReader("BABA", "iex", start, today)['close']
-
-trendGen(dat, window = 1.0/3)
-
 
 def findTops(x, window=1.0/3, charts=True):
 
@@ -93,5 +86,58 @@ def findTops(x, window=1.0/3, charts=True):
 
     return sigs
 
+def trendSegments(x, segs=2, charts=True):
+    y = np.array(x)
 
-findTops(dat, window = 1.0/3)
+    # Implement trendlines
+    segs = int(segs)
+    maxima = np.ones(segs)
+    minima = np.ones(segs)
+    segsize = int(len(y)/segs)
+    for i in range(1, segs+1):
+        ind2 = i*segsize
+        ind1 = ind2 - segsize
+        maxima[i-1] = max(y[ind1:ind2])
+        minima[i-1] = min(y[ind1:ind2])
+
+    # Find the indexes of these maxima in the data
+    x_maxima = np.ones(segs)
+    x_minima = np.ones(segs)
+    for i in range(0, segs):
+        x_maxima[i] = np.where(y == maxima[i])[0][0]
+        x_minima[i] = np.where(y == minima[i])[0][0]
+
+    if charts:
+        plot(y)
+        grid()
+
+    for i in range(0, segs-1):
+        maxslope = (maxima[i+1] - maxima[i]) / (x_maxima[i+1] - x_maxima[i])
+        a_max = maxima[i] - (maxslope * x_maxima[i])
+        b_max = maxima[i] + (maxslope * (len(y) - x_maxima[i]))
+        upperline = np.linspace(a_max, b_max, len(y))
+
+        minslope = (minima[i+1] - minima[i]) / (x_minima[i+1] - x_minima[i])
+        a_min = minima[i] - (minslope * x_minima[i])
+        b_min = minima[i] + (minslope * (len(y) - x_minima[i]))
+        lowerline = np.linspace(a_min, b_min, len(y))
+
+        if charts:
+            plot(upperline, 'g')
+            plot(lowerline, 'm')
+
+    if charts:
+        show()
+
+    # OUTPUT
+    return x_maxima, maxima, x_minima, minima
+
+
+today = datetime.now()
+d = timedelta(days=365)
+start = today - d
+dat = data.DataReader("BABA", "iex", start, today)['close']
+
+trendSegments(dat)
+trendGen(dat)
+findTops(dat)
