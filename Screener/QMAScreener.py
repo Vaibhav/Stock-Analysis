@@ -1,87 +1,60 @@
 '''
 Author: Vaibhav Khaitan
-Date: 1/30/2017
+Date: 8/15/2018
 Description: Script attempts to filter out stocks which can be used for quantified moving average strategy.
 '''
 from datetime import datetime, timedelta
 import sys
 import time
-
-from yahoo_finance import Share
+import pandas as pd 
+from pandas_datareader import data
+from iexfinance import Stock, get_historical_data, get_available_symbols
 
 masterlist = []
 minorlist = []
 now = datetime.now()
-theDate = str(now.year) + "-" + str(now.month) + "-" + str(now.day);
+
+rangeResistance = 0.01 # Range resistance level, the range between moving averages
+numberOfStocks = 100 # number of stocks to test
 
 def analyze(dma10, dma20, dma50, ticker):
-	tenDayAvg = sum(dma10) / float(len(dma10))
-	twentyDayAvg = sum(dma20) / float(len(dma20))
-	print(tenDayAvg)
-	print(twentyDayAvg)
-	theRange = 0.005 * tenDayAvg
-	if tenDayAvg - theRange < twentyDayAvg and twentyDayAvg < tenDayAvg + theRange:
+	theRange = 0.01 * dma10
+	if dma10 - theRange < dma20 and dma20 < dma10 + theRange:
 		minorlist.append(ticker)
-		if tenDayAvg - theRange < dma50 and dma50 < tenDayAvg + theRange:
+		if dma10 - theRange < dma50 and dma50 < dma10 + theRange:
 			masterlist.append(ticker)
 
 
-def get_ma(stock):
-	prices_10 = []
-	prices_20 = []
-	stock = Share(stock)
-	if (stock.get_price() < 5):
-		return 0,0,0
-	dma_10 = now - timedelta(days=30)
-	date10 = str(dma_10.year) + "-" + str(dma_10.month) + "-" + str(dma_10.day);
-	time.sleep(0.5)
+def get_ma(ticker):
+	stock = Stock(ticker)
+	start = now - timedelta(days=25)
 	try:
-		data = stock.get_historical(date10, theDate)
-		prices_50 = stock.get_50day_moving_avg()
-
-		count = 0
-		for theData in data:
-			if count < 10:
-				count = count + 1
-				prices_10.append(float(theData['Adj_Close']))
-			else:
-				continue
-		count = 0
-		for theData in data:
-			if count < 20:
-				count = count + 1
-				prices_20.append(float(theData['Adj_Close']))
-			else:
-				continue
+		keyStats = stock.get_key_stats()
+		if (stock.get_price() < 5):
+			return -1,-1,-1
+		
+		df_hist = get_historical_data(ticker, start=start, end=now, output_format='pandas')
+		dma50 = keyStats['day50MovingAvg']
+		dma10 = df_hist.tail(10)['close'].mean()
+		dma20 = df_hist.tail(20)['close'].mean()
 	except:
-		return 0,0,0
-	print(prices_50)
-	return prices_10, prices_20, prices_50
+		return -1,-1,-1
+	
+	return dma10, dma20, dma50
 
 
+listOfTickers = get_available_symbols(output_format='pandas')
+df = pd.DataFrame(listOfTickers)
+df = df.loc[df['type'] == 'cs']
+df = df.head(numberOfStocks)
 
-def read_tickers():
-    print("Reading tickers from \"tickers.txt\":")
-    f = open("tickers/tickers.txt", 'r')
-    names = []
-    # read tickers from tickers.txt
-    for line in f:
-    	line = line.strip('\n')
-    	line = line.upper()
-    	line = line.strip('\t')
-    	names.append(line)
-    print(names)
-    return names
-
-
-stocks = read_tickers()
-for s in stocks:
-	dma10, dma20, dma50 = get_ma(s)
-	if dma10 == 0 or dma20 == 0 or dma50 == 0:
+for i,r in df['symbol'].iteritems():
+	print("Getting Averages for "+r+"\n")
+	dma10, dma20, dma50 = get_ma(r)
+	if dma10 == -1 or dma20 == -1 or dma50 == -1:
 		continue
 	else:
-		print(s)
-		analyze(dma10, dma20, dma50, s)
+		analyze(dma10, dma20, dma50, r)
 
 
 print("Major List:")
