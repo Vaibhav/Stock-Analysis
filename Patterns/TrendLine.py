@@ -100,7 +100,7 @@ def trendSegments(x, segs=2, charts=True):
         maxima[i-1] = max(y[ind1:ind2])
         minima[i-1] = min(y[ind1:ind2])
 
-    # Find the indexes of these maxima in the data
+    # Find the indexes of the maximums
     x_maxima = np.ones(segs)
     x_minima = np.ones(segs)
     for i in range(0, segs):

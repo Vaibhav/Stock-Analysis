@@ -13,3 +13,13 @@ dat = data.DataReader("BABA", "iex", start, today)['close']
 
 
 Run the file: **python TrendLine.py** 
+
+Results from Alibaba's stock data for past year. 
+
+![BABA TrendLines](BABAtrend.png)
+
+
+![BABA TrendLines using Segments](BABAtrendSegments.png)
+
+
+![BABA Highs and Lows](BABA_highLow.png)
