@@ -47,25 +47,3 @@ plt.xticks(rotation=90)
 plt.autoscale(enable=True, axis='both')
 plt.grid()
 plt.show()
-
-'''
-r       Red
-g	Green
-b	Blue
-c	Cyan
-m	Magenta
-y	Yellow
-k       Black
-w	White
-'''
-
-'''
-    if factor_found == 0:
-        factor_found = 1;
-        if row[5] > 999:
-            length = len(row[5])
-            length = length - 3;
-            if row[4] < 100:
-                length += 1;
-            factor = 10 ** length
-    '''
