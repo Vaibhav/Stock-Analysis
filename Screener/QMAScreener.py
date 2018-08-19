@@ -4,8 +4,6 @@ Date: 8/15/2018
 Description: Script attempts to filter out stocks which can be used for quantified moving average strategy.
 '''
 from datetime import datetime, timedelta
-import sys
-import time
 import pandas as pd 
 from pandas_datareader import data
 from iexfinance import Stock, get_historical_data, get_available_symbols

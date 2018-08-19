@@ -18,11 +18,13 @@ now = datetime.now()
 start = now - timedelta(days=90)
 df = get_historical_data(ticker, start=start, end=now, output_format='pandas')
 
+
 def macd(dat):
   dat['ma1'] = dat['close'].rolling(window=moving_avg1, min_periods=1).mean()
   dat['ma2'] = dat['close'].rolling(window=moving_avg2, min_periods=1).mean()
 
   return dat
+
 
 def add_macd(df):
 
