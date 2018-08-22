@@ -7,7 +7,23 @@ Some of the goals I want to achieve with this project include:
   - Different regression implementations on the close price data. (Linear, SVM, etc.) Possibly try to fit a polynomial function which follows the data.  
   - Predicting Stock price for the next day. 
 
-## Results
+
+## Trends
+
+TrendLine.py Results
+
+![trendy](figure_1.png)
+
+![trendy](figure_1-1.png)
+
+![trendy](figure_1-2.png)
+
+![trendy](figure_1-3.png)
+
+![trendy](figure_1-4.png)
+
+
+## Regression
 
 Using my code for linear regression and Nvidia's (NVDA) stock prices of each day. I got a slope of 0.1850399032986727 and a y intercept of 24.54867003005582. The 50.08 number is the price predicted for the next day based on the linear formula it calculated.
 
@@ -45,20 +61,6 @@ This barely makes a difference to the naked eye. The two graphs are very similar
 #### FB
 ![Facebook February 20](FB-feb20.png)
 
-
-#### Trends
-
-Working on a trend lines creator. 
-
-![trendy](figure_1.png)
-
-![trendy](figure_1-1.png)
-
-![trendy](figure_1-2.png)
-
-![trendy](figure_1-3.png)
-
-![trendy](figure_1-4.png)
 
 ## Version
 
