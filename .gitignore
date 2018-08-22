@@ -106,3 +106,5 @@ strats.py
 *.csv
 *.json
 .DS_Store
+
+nocommit/
