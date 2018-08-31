@@ -21,9 +21,9 @@ p = 120          # number of days of data for each data point
 features = ["open_high", "open_low", "open_close", "close_open", "close_close"]
 
 # Load the OHLC data into the variable data
-data_source = 'morningstar'
-start_date = datetime(2012, 1, 1)
-end_date = datetime(2018, 5, 2)
+data_source = 'iex'
+start_date = datetime(2013, 1, 1)
+end_date = datetime(2018, 8, 24)
 
 # Measure how long it takes to load the data 
 startTime = time.time()
@@ -32,10 +32,13 @@ startTime = time.time()
 stock_data = data.DataReader("MSFT", data_source, start_date, end_date)
 column_labels = stock_data.columns
 
-stock_data.drop(stock_data.index[0], inplace=True)
 print(stock_data.head())
 
 print("Loading data for {} stocks took {:3.1f} seconds".format(len(stockNames), time.time()-startTime))
 
 # Sort the data by date so that we can reference slices of the date index later
 stock_data.sort_index(level=[0], axis=0, inplace=True)
+
+print("===========Summary===========")
+print(stock_data.describe())
+
