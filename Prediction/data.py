@@ -15,17 +15,13 @@ from pandas_datareader import data as pdr
 from iexfinance import get_historical_data
 from datetime import datetime
 
+# Fetch the data
 ticker = "AAPL"
 start = datetime(2015,1,1)
 now = datetime.now()
 
 df = get_historical_data(ticker, start=start, end=now, output_format='pandas')
 df= df.dropna()
-
-# df.close.plot(figsize=(10,5))
-# plt.ylabel(ticker + " Price")
-# plt.grid()
-# plt.show()
 
 y = np.where(df['close'].shift(-1) > df['close'],-1,1)
 df['Open-Close'] = df.open - df.close
