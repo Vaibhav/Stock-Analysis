@@ -32,27 +32,11 @@ Using my code for linear regression and Nvidia's (NVDA) stock prices of each day
 50.0841766853
 ```
 
-This is insanely accurate. I decided to compare this result with result's I would get with a widely known API, famous for machine learning and other regression tools in python. The API is called sci-kit-learn.  
+### Screenshots
 
-```python
-[ 0.1850399]
-```
 
-Using the linear regression offered from the API We get almost the same result, except with less accuracy.  
+![Linear Regression performed on NVDA Stock data from January 2016](/Regression/NVDA2016.png)
 
-My method outputs a number with greater significant figures. 
-
-###Screenshots
-
-Using my regression model: 
-
-![Linear Regression performed on NVDA Stock dat from January 2016](/Regression/NVDA2016.png)
-
-Using Sci-kit-learn API:
-
-![Linear Regression performed on NVDA Stock dat from January 2016](/Regression/NVDA_2016.png)
-
-This barely makes a difference to the naked eye. The two graphs are very similar. 
 
 #### New Screenshots 
 
@@ -64,7 +48,7 @@ This barely makes a difference to the naked eye. The two graphs are very similar
 
 ## Version
 
-**1.0.0 - Released Stock Scraper**
+1.0.0 - Released Stock Scraper
 
 1.0.1 - Minor bug fixes with duplicate entries in the CSV File
 
@@ -79,7 +63,6 @@ This barely makes a difference to the naked eye. The two graphs are very similar
 
 
 #### License
-
 
 MIT
 
