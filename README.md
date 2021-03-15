@@ -16,8 +16,6 @@ TrendLine.py Results
 
 ![trendy](figure_1-1.png)
 
-![trendy](figure_1-2.png)
-
 ![trendy](figure_1-3.png)
 
 ![trendy](figure_1-4.png)
@@ -55,11 +53,11 @@ Using my code for linear regression and Nvidia's (NVDA) stock prices of each day
 
 ### Todo
 
-- Use Machine Learning algorithms to predict stock close price for the next day
-- Add data visualization with technical indicators such as moving average, volume, STOCH. 
-- Display technical analysis based on stock prices. 
-- Add Ratio Analysis & compare ratio with competitors' ratios. (Allow users to define competitors' ratios)
-- Add Stock screener, to screen through every stock and see which ones are best buys.
+[] Use Machine Learning algorithms to predict stock close price for the next day
+[] Add data visualization with technical indicators such as moving average, volume, STOCH. 
+[] Display technical analysis based on stock prices. 
+[] Add Ratio Analysis & compare ratio with competitors' ratios. (Allow users to define competitors' ratios)
+[] Add Stock screener, to screen through every stock and see which ones are best buys.
 
 
 #### License
