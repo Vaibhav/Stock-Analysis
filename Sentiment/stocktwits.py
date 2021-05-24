@@ -3,6 +3,10 @@ import requests
 import json
 import datetime
 
+INPUT_FILE = "tickers.txt"
+FILENAME = "stocktwits.json"
+REMOVE_OLDER_THAN = 21 # in days
+KEEP_NULL_SENTIMENT = False
 
 # write to JSON file and properly formats the file
 def write_to_file(nameOfFile, data):
@@ -23,7 +27,6 @@ def get_twits_list(tickers):
     ret = {}
     for ticker in tickers:
         print("Getting data for", ticker)
-        # error handling
         try:
             data = get_twits(ticker)
             symbol = data['symbol']['symbol']
@@ -36,16 +39,14 @@ def get_twits_list(tickers):
 
 
 def read_tickers():
-    print("Reading tickers from \"tickers.txt\":")
-    f = open("tickers.txt", 'r')
+    print("Reading tickers from", INPUT_FILE)
+    f = open(INPUT_FILE, 'r')
     names = []
-    # read tickers from tickers.txt
     for line in f:
     	line = line.strip('\n')
     	line = line.upper()
     	line = line.strip('\t')
     	names.append(line)
-    print(names)
     return names
 
 
@@ -53,38 +54,27 @@ def remove_old(original, age_limit=30):
     print("Removing tweets that are more than", age_limit, "days old")
     threshold = datetime.datetime.now() - datetime.timedelta(age_limit)
     result = {}
-    # checks if data is more than age_limit and removes if so
+    # Checks if data is more than age_limit and removes
     for ticker in list(original.keys()):
         result[ticker] = []
         for msg in original[ticker]:
             dt = datetime.datetime.strptime(msg["created_at"], "%Y-%m-%dT%H:%M:%SZ")
-            if dt >= threshold:
+            sentiment = True if KEEP_NULL_SENTIMENT else msg["entities"]["sentiment"]
+            if dt >= threshold and sentiment != None:
                 result[ticker].append(msg)
     return result
 
-# default file name
-FILENAME = "stocktwits.json"
 
 if __name__ == "__main__":
+    x = input("Do you want to specify name of output file? Type y or Y for yes.\n").lower()
 
-    # Optional file output - Make sure you are using Python 3!
-    # To check, import sys and then print(sys.version)
-    x = input("Do you want to specify name of output file? Type y or Y for yes. \n").lower()
-
-    # Execute this code if option is taken
-    if x.startswith("y") or x.startswith("Y"):
-        filename = input("What is file name? \n")
+    if x.startswith("y"):
+        filename = input("Enter JSON file name:\n")
         if not (filename.endswith(".json")):
             filename = filename + ".json"
         FILENAME = filename
 
-    # get list of ticker codes
     codes = read_tickers()
-
-    # print(get_twits('AAPL'))
-    # for each ticker code get the data
     twitdata = get_twits_list(codes)
-    # remove the data if older than X days, useless
-    twitdata = remove_old(twitdata, 21)
-    # write to json file
+    twitdata = remove_old(twitdata, REMOVE_OLDER_THAN)
     write_to_file(FILENAME, twitdata)
