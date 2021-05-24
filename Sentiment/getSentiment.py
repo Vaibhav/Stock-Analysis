@@ -66,7 +66,6 @@ examples = [
 "$AAPL option cash value for March &#39;17 using Google data",
 "$AAPL volatility, price, &amp; volume",
 "$TSLA $AMZN $AAPL $FB WHAT SIDE OF HISTORY ARE YOU ON???????"
-
 ]
 
 bullish = 0
@@ -124,5 +123,3 @@ for j in tmp:
 print("avg: " + str(sum/count))
 print(bullish)
 print(bearish)
-
-

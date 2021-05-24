@@ -5,9 +5,11 @@ import json
 import datetime
 from bs4 import BeautifulSoup
 
+INPUT_FILE = "tickers.txt"
+FILENAME = "headlines.json"
 
 names = ["AAPL", "MMM", "AXP", "T", "BA", "CAT", "CVX", "CSCO", "KO", "DIS", "DD", "XOM", "GE", "GS", "HD", "IBM",
-         "INTL", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "NVS",
+         "INTL", "JNJ", "JPM", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "VZ", "V", "WMT", "NVS",
          "TM", "PTR", "WFC", "BABA", "TWTR", "FB", "GOOG", "AAPL", "YHOO", "BP", "PEP"]
 
 
@@ -64,8 +66,6 @@ def write_to_file(filename, data):
         print("Dumping JSON to", filename)
         json.dump(data, f, sort_keys=True, indent=4, separators=(',', ':'))
 
-
-FILENAME = "headlines.json"
 
 if __name__ == "__main__":
 
