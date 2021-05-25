@@ -27,8 +27,10 @@ class Sentiment():
 
 
     # Get data for each ticker in the tickers list
-    def get_twits_list(self):
-        for ticker in self.tickers:
+    def get_twits_list(self, tickers=None):
+        if tickers is None:
+            tickers = self.tickers
+        for ticker in tickers:
             print("Getting data for", ticker)
             try:
                 data = self.get_twits(ticker)
@@ -40,14 +42,13 @@ class Sentiment():
                 print("Error getting", ticker)
         return self.data
 
-    def read_tickers(self):
-        print("Reading tickers from", INPUT_FILE)
-        f = open(INPUT_FILE, 'r')
+    def read_tickers(self, input_file = INPUT_FILE):
+        print("Reading tickers from", input_file)
+        f = open(input_file, 'r')
         self.tickers = []
         for line in f:
-            line = line.strip('\n')
+            line = line.strip('\n\t')
             line = line.upper()
-            line = line.strip('\t')
             self.tickers.append(line)
         return self.tickers
 
@@ -81,6 +82,6 @@ if __name__ == "__main__":
     sentiment = Sentiment()
 
     codes = sentiment.read_tickers()
-    twitdata = sentiment.get_twits_list(codes)
+    twitdata = sentiment.get_twits_list()
     twitdata = sentiment.remove_old(twitdata)
     sentiment.write_to_file(FILENAME, twitdata)
