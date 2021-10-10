@@ -30,9 +30,7 @@ templist = []
 titleslist = soup.find_all('td', {"class": "table-top"})
 titleslisttickerid = soup.find_all('td', {"class": "table-top-s"})
 titleticker = titleslisttickerid[0].text
-titlesarray = []
-for title in titleslist:
-    titlesarray.append(title.text)
+titlesarray = [title.text for title in titleslist]
 
 titlesarray.insert(1, titleticker)
 i = 0
