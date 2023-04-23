@@ -55,10 +55,12 @@ Using my code for linear regression and Nvidia's (NVDA) stock prices of each day
 
 - [ ] Use Machine Learning algorithms to predict stock close price for the next day
 - [ ] Add data visualization with technical indicators such as moving average, volume, STOCH.
-- [ ] Display technical analysis based on stock prices.
-- [ ] Add Ratio Analysis & compare ratio with competitors' ratios. (Allow users to define competitors' ratios)
 - [ ] Add Stock screener, to screen through every stock and see which ones are best buys.
 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Vaibhav/Stock-Analysis&type=Date)](https://star-history.com/#Vaibhav/Stock-Analysis&Date)
 
 #### License
 
